@@ -115,6 +115,7 @@ Chat.prototype = {
     },
     setOptions:function(o){
         $.extend(this.options,o);
+        console.log(this.options);
     }
 
 };
