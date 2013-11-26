@@ -1,0 +1,127 @@
+#page, .page {
+	min-width: 1000px;
+	width: 100%;
+}
+.header a:hover {
+	color: #f09;
+	text-decoration: none;
+}
+.header a {
+	color: #999;
+}
+#header{
+	width: 100%;
+	height: 93px;
+	background-color: #181818;
+	background-repeat: repeat-x;
+}
+.topNav{
+	width: 1000px;
+	margin: 0 auto;
+	height: 29px;
+}
+.userPanel {
+	float: right;
+	display: inline;
+	margin-right: -6px;
+	_height: 29px;
+	_overflow: hidden;
+}
+.userPanel li.loginbtn {
+	padding: 0 4px 0 0;
+}
+.userPanel li {
+	float: left;
+	height: 24px;
+	line-height: 24px;
+	cursor: pointer;
+	padding: 3px 10px;
+	_display: inline;
+}
+.userPanel li.loginbtn a:hover {
+	background: #8a0056;
+}
+.userPanel li.loginbtn a {
+	background: #98005e;
+	color: #fff;
+	display: inline-block;
+	height: 27px;
+	line-height: 29px;
+	width: 42px;
+	text-align: center;
+	border-radius: 0 0 3px 3px;
+	text-decoration: none;
+}
+.userPanel li.registerbtn a {
+	margin-top: 5px;
+	vertical-align: top;
+	border-right: 1px solid #666;
+	padding-right: 8px;
+	height: 14px;
+	line-height: 12px;
+	display: inline-block;
+}
+.headmanup{
+	width: 100%;
+	min-width: 1000px;
+	border-top: 1px solid #333;
+}
+.headmanu{
+	height: 60px;
+	width: 1000px;
+	margin: 0 auto;
+}
+.headmanu .logo{
+	float: left;
+	width: 100px;
+	height: 46px;
+	margin-top: 10px;
+	margin-right: 40px;
+}
+.headmanu .navMain{
+	float: left;
+	font-family: 'Microsoft Yahei';
+}
+.headmanu .navMain li{
+	float: left;
+	vertical-align: top;
+}
+.headmanu .navMain li.active a {
+	color: #f09;
+}
+.headmanu .navMain li a {
+	height: 20px;
+	line-height: 20px;
+	float: left;
+	color: #fff;
+	display: block;
+	padding: 21px;
+	font-size: 15px;
+}
+.headmanu .navMain li a:hover{
+    text-decoration: none;
+    background: none repeat scroll 0% 0% rgb(0, 0, 0);
+    color: rgb(255, 0, 153);
+    padding: 21px 20px;
+    border-left: 1px solid rgb(42, 42, 42);
+    border-right: 1px solid rgb(42, 42, 42);
+}
+#content{
+	width: 1000px;
+	margin: 0 auto;
+}
+#footer{
+	width: 1000px;
+	margin: 0 auto;
+	text-align: center;
+	color:#a2a2a2;
+}
+html,body,div,p,h1,h2,h3,h4,blockquote,pre,form,fieldset,ol,ul,li,dl,dd,dt,table,tbody,thead,tfoot,tr,th,td{margin:0;padding:0}
+body{font:12px/18px Tahoma,"宋体";color:#333;background:transparent;_font-family:Tahoma,Simsun,Arial,Helvetica,sans-serif}
+.ft_yh{font-family:"Microsoft Yahei",sans-serif}
+img{border:0}
+button{vertical-align:middle;cursor:pointer}input,img{vertical-align:middle}input,textarea{font-size:inherit}
+textarea{border-style:solid;border-width:1px;border-color:#cecece;padding:4px 4px 2px;no-repeat 0 0;resize:vertical;overflow-y:auto}ul,ol{list-style:none}
+table{border-collapse:collapse}table th a{color:#000}table th a.on{font-weight:700;text-decoration:none}
+a{outline:0;color:#f09;text-decoration:none}a:hover{color:#f09;text-decoration:underline}
+em,i{font-style:normal}fieldset{border:0}legend{display:none}h1,h2,h3,h4,h5,h6{font-size:14px}
