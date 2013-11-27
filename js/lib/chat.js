@@ -66,8 +66,11 @@ Chat.prototype = {
     disconnect:function(){
         this.connection.disconnect();
     },
-    send:function(){
-
+    send:function(to,message,type){
+        var self = this,
+            _t = type || 'chat';
+        var _msg = $msg({to: to, from: self.connection.jid, type: _t}).c("body").t(message);
+        self.connection.send(_msg.tree());
     },
     onMessage:function(msg) {
         var self = this,

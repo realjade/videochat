@@ -30,7 +30,7 @@ $(function(){
         chat.joinRoom('xx@vv.183.203.16.207');
     }
     function onMessage(form,msg,type){
-
+        message((from ? from : '[消息]') + ': ' + msg);
     }
     function onRoomMessage(from,msg,type){
         message((from ? from : '[消息]') + ': ' + msg);
@@ -48,17 +48,12 @@ $(function(){
     });
     
     
-    $('#send').bind('click', function () {
-        var button = $('#send').get(0);
-        var to = $('#to').get(0).value;
-        var text = $('#msg').get(0).value;
-        
-        var reply = $msg({to: to, from: connection.jid, type: 'chat'})
-                        .c("body").t(text);
-        connection.send(reply.tree());
-        $('#msg').get(0).value = '';
-
-        message('我 to ' + to.split('@')[0] + ': ' + text);
+    $('#send').click(function () {
+        var to = $('#to').val(),
+            msg = $('#msg').val();
+        chat.send('xx@vv.183.203.16.207',msg,'groupchat');
+        $('#msg').val('');
+        message('我 to ' + to.split('@')[0] + ': ' + msg);
     });
     $('#msg').keypress(function(event){
         if (event.which == 13) {
