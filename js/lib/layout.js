@@ -10,7 +10,7 @@ $(function(){
 	    			'</div>' +
 	    			'<div class="headmanup">' +
 		    			'<div class="headmanu">' +
-				            '<div class="logo"><a href="/"><img width="100" height="46" border="0" src="http://vr0.6.cn/imges/live2013/logo.jpg" title="美女视频聊天 – 六间房" alt="美女视频聊天 – 六间房"></a></div>'+
+				            '<div class="logo"><a href="/"><img width="100" height="46" border="0" src="images/logo.png" title="美女视频聊天 – 六间房" alt="美女视频聊天 – 六间房"></a></div>'+
 			                '<ul class="navMain">' +
 						        '<li class="active"><a href="/">首页</a></li>' +
 						        '<li class="navMain-video"><a href="store.html">商城</a></li>' +
