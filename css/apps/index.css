@@ -1,8 +1,97 @@
 .col1{
 	float: left;
-	width: 180px;
+	width: 178px;
 	padding-bottom: 20px;
+	margin-top: 10px;
+}
+.banner{
+	border:1px solid #e6e6e6;
+	border-top: 3px solid #f09;
+	border-radius: 3px 3px 0 0;
+	padding-bottom: 30px;
+}
+.banner .item.active{
+
+}
+.banner .item a{
+	display: block;
+	color:#333;
+	font-size: 22px;
+	text-decoration: none;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	font-weight: bold;
+	cursor: pointer;
+	border-bottom: 1px solid #e6e6e6;
+}
+.banner .item.active a{
+	color: rgb(255, 0, 153);
+	cursor: default;
+}
+.banner ul li{
+	font-size: 14px;
+	padding: 10px 0px 0px 20px;
+	line-height: 30px;
 }
 .col2{
 	float: left;
+	width: 820px;
+	margin-top: 10px;
+}
+.room-panel{
+	float: left;
+	width: 640px;
+	padding-top: 23px;
+}
+.room-panel .title{
+	padding: 0 0 12px;
+	margin: 0px 20px 20px 20px;
+	font-size: 18px;
+	border-bottom: 1px solid #e6e6e6;
+}
+.rooms{
+	margin: 20px;
+}
+.rooms .room{
+	float: left;
+	width: 140px;
+	padding: 0px 10px 10px 0px;
+
+}
+.rooms .room .room-info{
+	border: 1px solid #000;
+}
+.rank-panel{
+	float: right;
+	width: 178px;
+	border:1px solid #e6e6e6;
+	border-top: 3px solid #f09;
+	border-radius: 3px 3px 0 0;
+}
+.rank-panel .title{
+	font-size: 20px;
+	margin-top: 15px;
+	padding: 0px 10px;
+	font-weight: bold;
+}
+.rank-panel .subtitle{
+	margin: 15px 10px;
+	padding-bottom: 5px;
+	font-size: 14px;
+	border-bottom: 1px solid #e6e6e6;
+}
+.liveBtn{
+	color:#333;
+	font-size: 22px;
+	text-decoration: none;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	font-weight: bold;
+	cursor: pointer;
+	border-bottom: 1px solid #e6e6e6;
+}
+.liveBtn:hover{
+	color: rgb(255, 0, 153);
 }
