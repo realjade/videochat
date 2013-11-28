@@ -9,14 +9,27 @@
 	border-top: 3px solid #f09;
 	border-radius: 3px 3px 0 0;
 	padding-bottom: 30px;
+	position: relative;
 }
 .banner .item.active{
-
+	background: #e6e6e6
+}
+.banner .item.active:after {
+    border-left: 7px solid #e6e6e6;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    content: "";
+    position: absolute;
+    top: 18px;
+    right: -7px;
+}
+.banner .item.active a{
+	font-size: 22px;
 }
 .banner .item a{
 	display: block;
 	color:#333;
-	font-size: 22px;
+	font-size: 18px;
 	text-decoration: none;
 	height: 50px;
 	line-height: 50px;
@@ -42,7 +55,7 @@
 .room-panel{
 	float: left;
 	width: 640px;
-	padding-top: 23px;
+	padding-top: 21px;
 }
 .room-panel .title{
 	padding: 0 0 12px;
