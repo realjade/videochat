@@ -6,7 +6,9 @@ $(function(){
 		$.extend(options,o);
 		var self = this;
 		function init(){
-			
+			var _template = '<div class="chatroom">' +
+								'<div class=""></div>'
+							'</div>';
 		}
 	};
 });
