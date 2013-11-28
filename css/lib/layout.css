@@ -27,7 +27,7 @@
 	_height: 29px;
 	_overflow: hidden;
 }
-.userPanel li.loginbtn {
+.userPanel li.loginBtn {
 	padding: 0 4px 0 0;
 }
 .userPanel li {
@@ -38,10 +38,10 @@
 	padding: 3px 10px;
 	_display: inline;
 }
-.userPanel li.loginbtn a:hover {
+.userPanel li.loginBtn a:hover {
 	background: #8a0056;
 }
-.userPanel li.loginbtn a {
+.userPanel li.loginBtn a {
 	background: #98005e;
 	color: #fff;
 	display: inline-block;
@@ -52,7 +52,7 @@
 	border-radius: 0 0 3px 3px;
 	text-decoration: none;
 }
-.userPanel li.registerbtn a {
+.userPanel li.registerBtn a {
 	margin-top: 5px;
 	vertical-align: top;
 	border-right: 1px solid #666;

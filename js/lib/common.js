@@ -597,6 +597,7 @@ CommonDialog = function(o){
 	this.options={
 		width: 560,
         title: '提示',
+        titleShow:true,
         message: '你木有事做吗？你真的木有事做吗？那你替我写封情书给布娃娃吧~',
         isFixed: true,
         denyEsc: false,
@@ -665,7 +666,9 @@ CommonDialog.prototype={
                 position: 'fixed'
             });
         }
-        
+        if(!this.options.titleShow){
+            element.find('header').hide();
+        }
         return element;
     },
     reLocation:function(){

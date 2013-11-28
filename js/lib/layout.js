@@ -3,8 +3,8 @@ $(function(){
 	var header = '<div id="header" class="header">' +
 				 	'<div class="topNav">' +
 					 	'<div class="userPanel">' +
-					 		'<ul><li class="loginbtn"><a>登录</a></li>' +
-	    					'<li class="registerbtn"><a>注册</a></li>' +
+					 		'<ul><li class="loginBtn"><a>登录</a></li>' +
+	    					'<li class="registerBtn"><a>注册</a></li>' +
 	    					'<li class="help"><a href="http://v.6.cn/help.php" target="_blank">帮助</a></li></ul>' +
 	    				'</div>' +
 	    			'</div>' +
@@ -18,15 +18,77 @@ $(function(){
 						'</div>' +
 					'</div>' +
 				 '</div>';
+	var loginStr = '<div class="login">' +
+				   		'<div class="title">立即登录，马上和美女主播互动！</div>' +
+				   		'<div class="item">' +
+				   			'<div class="subtitle">用户名</div>' +
+				   			'<div class="input"><input name="username" type="text" placeholder="请输入您的用户名"/></div>' +
+				   		'</div>' +
+				   		'<div class="item">' +
+				   			'<div class="subtitle">密码</div>' +
+				   			'<div class="input"><input name="password" type="password" placeholder="请输入您的密码"/></div>' +
+				   		'</div>' +
+				   		'<div class="item">' +
+				   			'<label id="remember" class="checkbox"><i class="unchecked"></i>保持我的登录状态</label>' +
+                            '<a class="right" id="forget" href="forget.html">忘记密码?</a>'+
+                            '<a class="right" class="registerBtn">立即注册</a>'+
+				   		'</div>' +
+				   		'<div class="loginBtn">立即登录</div>'
+				   '</div>';
+	var registerStr = '<div class="register">' +
+				   		'<div class="title">立即注册，马上和美女主播互动！</div>' +
+				   		'<div class="item">' +
+				   			'<div class="subtitle">用户名</div>' +
+				   			'<div class="input"><input name="username" type="text" placeholder="请输入您的用户名"/></div>' +
+				   		'</div>' +
+				   		'<div class="item">' +
+				   			'<div class="subtitle">密码</div>' +
+				   			'<div class="input"><input name="password" type="password" placeholder="请输入您的密码"/></div>' +
+				   		'</div>' +
+				   		'<div class="item">' +
+				   			'<label id="remember" class="checkbox"><i class="unchecked"></i>保持我的登录状态</label>' +
+                            '<a class="right" id="forget" href="forget.html">忘记密码?</a>'+
+                            '<a class="right" class="registerBtn">立即注册</a>'+
+				   		'</div>' +
+				   		'<div class="loginBtn">立即注册</div>'
+				   '</div>';
 	app.initHeader = function(){
 		var hdPanel = $(header);
 		hdPanel.prependTo($('#page'));
-		hdPanel.on('click','.loginbtn',function(){
+		hdPanel.on('click','.loginBtn',function(){
+			var dialog = new CommonDialog({
+				width:460,
+                titleShow: false,
+                message: loginStr,
+                isConfirm:false
+            });
+            var element = dialog.element;
+            element.on('click','.loginBtn',function(){
+            	var usernameInput = $('input[name="username"]',element),
+            		pwdInput = $('input[name="password"]',element),
+            		username = usernameInput.val(),
+            		pwd = pwdInput.val();
 
+            });
+            element.on('click','.registerBtn',function(){
+            	$('.registerBtn',hdPanel).trigger('click');
+            });
 		});
-		hdPanel.on('click','.registerbtn',function(){
-
-		})
+		hdPanel.on('click','.registerBtn',function(){
+			var dialog = new CommonDialog({
+				width:460,
+                titleShow: false,
+                message: registerStr,
+                isConfirm:false
+            });
+            var element = dialog.element;
+            element.on('click','.loginBtn',function(){
+            	$('.loginBtn',hdPanel).trigger('click');
+            });
+            element.on('click','.registerBtn',function(){
+            	
+            });
+		});
 	};
 	var footer = '<div id="footer" class="footer">' +
 					'Copyright&copy;boboxiu.tv. All Rights Reserved.京ICP备13005687号-3' +
