@@ -1,0 +1,453 @@
+#page{
+	background: url("../../images/liveshow/bg.jpg") repeat scroll 0 0 transparent;
+	overflow: hidden;
+}
+.panel-left{
+	float: left;
+	width: 480px;
+	margin-top: 12px;
+}
+.ownerinfo{
+	background: #fff;
+}
+.ownerinfo a:hover{
+	text-decoration: underline;
+}
+.ownerinfo .avatar{
+	float:left;
+	padding: 10px;
+}
+.ownerinfo .txt {
+	width: 214px;
+	float: left;
+	font-size: 14px;
+	padding-top: 12px;
+	padding-left: 12px;
+	line-height: 24px;
+}
+.ownerinfo .txt li {
+	_margin-bottom: 5px;
+	color: #666;
+	line-height: 30px;
+}
+.level_diff_score, .live_time{
+	font-size: 12px;
+}
+.ownerinfo .btnfollow {
+	float: right;
+	padding: 12px;
+	_margin-right: 10px;
+}
+.ownerinfo .btnfollow a {
+	display: block;
+	background: #f82c65;
+	width: 80px;
+	height: 22px;
+	text-align: center;
+	padding-top: 8px;
+	font-size: 12px;
+	color: #fff;
+	text-decoration: none;
+}
+.liveshow{
+	height: 340px;
+	background: #fff;
+	margin-top: 12px;
+	width: 450px;
+	padding: 15px;
+}
+.gift{
+	background: #181818;
+	width: 450px;
+	padding: 15px;
+	height: 40px;
+	filter: alpha(opacity:80);
+	opacity: 0.8;
+}
+.panel-right{
+	float: right;
+	width: 510px;
+	margin-top: 12px;
+}
+.giftmsg{
+	background: #fff;
+	padding-top: 10px;
+	_padding-top: 14px;
+	height: 100px;
+	_height: 58px;
+	padding-left: 15px;
+	padding-bottom: 10px;
+	font-size: 12px;
+	background: #fff;
+	filter: alpha(opacity:90);
+	opacity: 0.9;
+}
+.chatroom{
+	width: 510px;
+	height: 439px;
+	background: #fff;
+	margin-top: 12px;
+}
+.actorlv {
+	background:url(../images/pc/common/level_user.png) no-repeat;
+	width:32px;
+	height:14px;
+	padding-left:3px;
+	overflow:hidden;
+	line-height:22px;
+	display:inline-block; cursor:pointer;
+}
+.lv0 {
+	background-position:left top;
+}
+.lv1 {
+	background-position:left -17px;
+}
+.lv2 {
+	background-position:left -33px;
+}
+.lv3 {
+	background-position:left -49px;
+}
+.lv4 {
+	background-position:left -65px;
+}
+.lv5 {
+	background-position:left -81px;
+}
+.lv6 {
+	background-position:left -97px;
+}
+.lv7 {
+	background-position:left -113px;
+}
+.lv8 {
+	background-position:left -129px;
+}
+.lv9 {
+	background-position:left -145px;
+}
+
+.lv10 {
+	background-position:left -161px;
+}
+.lv11 {
+	background-position:left -178px;
+}
+.lv12 {
+	background-position:left -193px;
+}
+.lv13 {
+	background-position:left -209px;
+}
+.lv14 {
+	background-position:left -225px;
+}
+.lv15 {
+	background-position:left -241px;
+}
+.lv16 {
+	background-position:left -257px;
+}
+.lv17 {
+	background-position:left -273px;
+}
+.lv18 {
+	background-position:left -289px;
+}
+.lv19 {
+	background-position:left -305px;
+}
+.lv20 {
+	background-position:left -321px;
+}
+.lv21 {
+	background-position:left -337px;
+}
+.lv22 {
+	background-position:left -353px;
+}
+.lv23 {
+	background-position:left -369px;
+}
+.lv24 {
+	background-position:left -385px;
+}
+.lv25 {
+	background-position:left -401px;
+}
+.actorlv {
+	background: url(../../images/liveshow/level_user.png) no-repeat;
+	width: 32px;
+	height: 14px;
+	padding-left: 3px;
+	overflow: hidden;
+	line-height: 22px;
+	display: inline-block;
+	cursor: pointer;
+}
+.lv0 {
+	background-position:left top;
+}
+.lv1 {
+	background-position:left -17px;
+}
+.lv2 {
+	background-position:left -33px;
+}
+.lv3 {
+	background-position:left -49px;
+}
+.lv4 {
+	background-position:left -65px;
+}
+.lv5 {
+	background-position:left -81px;
+}
+.lv6 {
+	background-position:left -97px;
+}
+.lv7 {
+	background-position:left -113px;
+}
+.lv8 {
+	background-position:left -129px;
+}
+.lv9 {
+	background-position:left -145px;
+}
+
+.lv10 {
+	background-position:left -161px;
+}
+.lv11 {
+	background-position:left -178px;
+}
+.lv12 {
+	background-position:left -193px;
+}
+.lv13 {
+	background-position:left -209px;
+}
+.lv14 {
+	background-position:left -225px;
+}
+.lv15 {
+	background-position:left -241px;
+}
+.lv16 {
+	background-position:left -257px;
+}
+.lv17 {
+	background-position:left -273px;
+}
+.lv18 {
+	background-position:left -289px;
+}
+.lv19 {
+	background-position:left -305px;
+}
+.lv20 {
+	background-position:left -321px;
+}
+.lv21 {
+	background-position:left -337px;
+}
+.lv22 {
+	background-position:left -353px;
+}
+.lv23 {
+	background-position:left -369px;
+}
+.lv24 {
+	background-position:left -385px;
+}
+.lv25 {
+	background-position:left -401px;
+}
+.userlv {
+	background:url(../images/pc/common/level_actor.png) no-repeat;
+	width:40px;
+	height:16px;
+	overflow:hidden;
+	line-height:22px;
+	display:inline-block;
+}
+.lv0 {
+	background-position:left top;
+}
+.lev1 {
+	background-position:left -18px;
+}
+.lev2 {
+	background-position:left -36px;
+}
+.lev3 {
+	background-position:left -54px;
+}
+.lev4 {
+	background-position:left -72px;
+}
+.lev5 {
+	background-position:left -90px;
+}
+.lev6 {
+	background-position:left -108px;
+}
+.lev7 {
+	background-position:left -126px;
+}
+.lev8 {
+	background-position:left -144px;
+}
+.lev9 {
+	background-position:left -162px;
+}
+.lev10 {
+	background-position:left -180px;
+}
+.lev11 {
+	background-position:left -198px;
+}
+.lev12 {
+	background-position:left -216px;
+}
+.lev13 {
+	background-position:left -234px;
+}
+.lev14 {
+	background-position:left -252px;
+}
+.lev15 {
+	background-position:left -270px;
+}
+.lev16 {
+	background-position:left -288px;
+}
+.lev17 {
+	background-position:left -306px;
+}
+.lev18 {
+	background-position:left -324px;
+}
+.lev19 {
+	background-position:left -342px;
+}
+.lev20 {
+	background-position:left -360px;
+}
+.lev21 {
+	background-position:left -378px;
+}
+.lev22 {
+	background-position:left -396px;
+}
+.lev23 {
+	background-position:left -414px;
+}
+.lev24 {
+	background-position:left -432px;
+}
+.lev25 {
+	background-position:left -450px;
+}
+.lev26 {
+	background-position:left -468px;
+}
+.lev27 {
+	background-position:left -486px;
+}
+.lev28 {
+	background-position:left -502px;
+}
+.lev29 {
+	background-position:left -520px;
+}
+.lev30 {
+	background-position:left -538px;
+}
+/*礼物开始区域*/
+.sgf {
+	width: 24px;
+	height: 24px;
+	display: inline-block;
+	vertical-align: middle;
+	overflow: hidden;
+	background:url(../../images/liveshow/gifts_small.png) no-repeat;
+}
+.s_meiguihua{ background-position: left top;}
+.s_zhuantou{ background-position: left -24px;}
+.s_meme{ background-position: left -48px;}
+.s_bangbangtang{ background-position: left -72px;}
+.s_jiayou{ background-position: left -96px;}
+.s_zhangsheng{ background-position: left -120px;}
+.s_xiexie{ background-position: left -144px;}
+.s_baobao{ background-position: left -168px;}
+.s_huasu{ background-position: left -192px;}
+.s_lanseyaoji{ background-position: left -216px;}
+.s_hongjiu{ background-position: left -240px;}
+.s_xiangwen{ background-position: left -264px;}
+.s_xuejia{ background-position: left -288px;}
+.s_dangao{ background-position: left -312px;}
+.s_baobing{ background-position: left -336px;}
+.s_kohong{ background-position: left -360px;}
+.s_shuijingxie{ background-position: left -384px;}
+.s_xo{ background-position: left -408px;}
+.s_zuanjie{ background-position: left -432px;}
+.s_xiangshui{ background-position: left -456px;}
+.s_lvbao{ background-position: left -480px;}
+.s_xianglian{ background-position: left -504px;}
+.s_zhipiao{ background-position: left -504px;}
+.s_jintiao{ background-position: left -552px;}
+.s_huangguan{ background-position: left -576px;}
+.s_diannao{ background-position: left -600px;}
+.s_paoche{background-position: left -624px;}
+.s_youting{background-position: left -648px;}
+.s_feiji{ background-position: left -672px;}
+.s_zhandouji{ background-position: left -696px;}
+.s_tangke{ background-position: left -720px;}
+.s_bieshu{ background-position: left -744px;}
+.s_qiuhun{ background-position: left -768px;}
+.s_hangmu{ background-position: left -792px;}
+.s_zhishengfeiji{ background-position: left -816px;}
+.gf {
+	width: 42px;
+	height: 42px;
+	display: inline-block;
+	background:url(../../images/liveshow/gifts_big.png) no-repeat;
+}
+.meiguihua{ background-position: left top;}
+.zhuantou{ background-position: left -42px;}
+.meme{ background-position: left -84px;}
+.bangbangtang{ background-position: left -126px;}
+.jiayou{ background-position: left -168px;}
+.zhangsheng{ background-position: left -210px;}
+.xiexie{ background-position: left -252px;}
+.baobao{ background-position: left -294px;}
+.huasu{ background-position: left -336px;}
+.lanseyaoji{ background-position: left -378px;}
+.hongjiu{ background-position: left -420px;}
+.xiangwen{ background-position: left -462px;}
+.xuejia{ background-position: left -504px;}
+.dangao{ background-position: left -546px;}
+.baobing{ background-position: left -588px;}
+.kohong{ background-position: left -630px;}
+.shuijingxie{ background-position: left -672px;}
+.xo{ background-position: left -714px;}
+.zuanjie{ background-position: left -756px;}
+.xiangshui{ background-position: left -798px;}
+.lvbao{ background-position: left -840px;}
+.xianglian{ background-position: left -882px;}
+.zhipiao{ background-position: left -924px;}
+.jintiao{ background-position: left -966px;}
+.huangguan{ background-position: left -1008px;}
+.diannao{ background-position: left -1050px;}
+.paoche{background-position: left -1092px;}
+.youting{background-position: left -1134px;}
+.feiji{ background-position: left -1176px;}
+.zhandouji{ background-position: left -1218px;}
+.tangke{ background-position: left -1260px;}
+.bieshu{ background-position: left -1302px;}
+.qiuhun{ background-position: left -1344px;}
+.hangmu{ background-position: left -1386px;}
+.zhishengfeiji{ background-position: left -1428px;}

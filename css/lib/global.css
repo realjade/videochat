@@ -76,6 +76,9 @@ body {
     line-height: 1.4;
     font-family: Arial,Tahoma,Helvetica,"Microsoft Yahei","微软雅黑",STHeiti,"宋体";
 }
+p{
+    margin: 0;
+}
 
 /*
  * Remove text-shadow in selection highlight: h5bp.com/i
@@ -98,13 +101,14 @@ body {
    Links
    ========================================================================== */
 a {
-    color: #39599D;
+    color: #f09;
     cursor:pointer;
     text-decoration: none;
+    outline: 0;
 }
 
 a:visited {
-    color: #39599D;
+    color: #f09;
 }
 
 a:focus {
@@ -118,6 +122,7 @@ a:focus {
 a:hover,
 a:active {
     outline: 0;
+    color:#f09;
 }
 
 

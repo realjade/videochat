@@ -8,8 +8,6 @@
         <link rel="stylesheet" type="text/css" href="css/lib/common.css">
         <link rel="stylesheet" type="text/css" href="css/lib/layout.css">
         <link rel="stylesheet" type="text/css" href="css/apps/index.css">
-        <style type="text/css" media="screen"> 
-        </style>
         <script type="text/javascript" src="js/lib/jquery.min.js"></script>
         <script type="text/javascript" src="js/lib/html5.js"></script>
         <script type="text/javascript" src="js/lib/mustache.js"></script>
@@ -21,6 +19,11 @@
         <div id="page">
             <div id="content" class="content clearfix">
                 <div class="col1">
+                    <div class="viewCount">
+                      <p>当前在线玩家共有</p>
+                      <p class="num"><em>1,503,569</em>位</p>
+                    </div>
+                    <div class="bgBlock"><span class="bgBox"></span></div>
                     <div class="banner">
                         <div class="item active"><a>直播大厅</a></div>
                         <div class="item"><a>手机版下载</a></div>
@@ -36,58 +39,87 @@
                 <div class="col2">
                     <div class="room-panel">
                         <div class="title">VIP尊享房间</div>
-                        <div class="rooms">
+                        <div class="rooms clearfix">
                             <div class="room">
-                                <div class="room-logo">
-                                    <img src="" />
+                                <a class="room-logo" target="_blank" href="liveshow.html?roomid=xx">
+                                    <img src="images/liveshow/1.jpg" />
+                                    <i class="room-accountbg"></i>
+                                    <i class="room-account"><em>2</em>人观看</i>
                                     <i class="room-play"></i>
-                                    <div class="room-accountnum">2</div>
-                                </div>
+                                </a>
                                 <div class="room-info">
-                                    <div>nickname</div>
-                                    <div>time前开播</div>
+                                    <div class="room-nickname">
+                                        <a href="liveshow.html?roomid=xx"><img src="images/liveshow/2.png"></a>
+                                        <a href="liveshow.html?roomid=xx">主播1号</a>
+                                    </div>
+                                    <div class="room-time">开播&nbsp;24分钟前</div>
                                 </div>
                             </div>
                             <div class="room">
-                                <div class="room-logo">
-                                    <img src="" />
+                                <a class="room-logo" target="_blank" href="liveshow.html?roomid=xx">
+                                    <img src="images/liveshow/1.jpg" />
+                                    <i class="room-accountbg"></i>
+                                    <i class="room-account"><em>2</em>人观看</i>
                                     <i class="room-play"></i>
-                                    <div class="room-accountnum">2</div>
-                                </div>
+                                </a>
                                 <div class="room-info">
-                                    <div>nickname</div>
-                                    <div>time前开播</div>
+                                    <div class="room-nickname">
+                                        <a href="liveshow.html?roomid=xx"><img src="images/liveshow/2.png"></a>
+                                        <a href="liveshow.html?roomid=xx">主播1号</a>
+                                    </div>
+                                    <div class="room-time">开播&nbsp;24分钟前</div>
                                 </div>
                             </div>
                             <div class="room">
-                                <div class="room-logo">
-                                    <img src="" />
+                                <a class="room-logo" target="_blank" href="liveshow.html?roomid=xx">
+                                    <img src="images/liveshow/1.jpg" />
+                                    <i class="room-accountbg"></i>
+                                    <i class="room-account"><em>2</em>人观看</i>
                                     <i class="room-play"></i>
-                                    <div class="room-accountnum">2</div>
-                                </div>
+                                </a>
                                 <div class="room-info">
-                                    <div>nickname</div>
-                                    <div>time前开播</div>
+                                    <div class="room-nickname">
+                                        <a href="liveshow.html?roomid=xx"><img src="images/liveshow/2.png"></a>
+                                        <a href="liveshow.html?roomid=xx">主播1号</a>
+                                    </div>
+                                    <div class="room-time">开播&nbsp;24分钟前</div>
                                 </div>
                             </div>
                             <div class="room">
-                                <div class="room-logo">
-                                    <img src="" />
+                                <a class="room-logo" target="_blank" href="liveshow.html?roomid=xx">
+                                    <img src="images/liveshow/1.jpg" />
+                                    <i class="room-accountbg"></i>
+                                    <i class="room-account"><em>2</em>人观看</i>
                                     <i class="room-play"></i>
-                                    <div class="room-accountnum">2</div>
-                                </div>
+                                </a>
                                 <div class="room-info">
-                                    <div>nickname</div>
-                                    <div>time前开播</div>
+                                    <div class="room-nickname">
+                                        <a href="liveshow.html?roomid=xx"><img src="images/liveshow/2.png"></a>
+                                        <a href="liveshow.html?roomid=xx">主播1号</a>
+                                    </div>
+                                    <div class="room-time">开播&nbsp;24分钟前</div>
                                 </div>
                             </div>
-                            <div style="clear:both"></div>
+                            <div class="room">
+                                <a class="room-logo" target="_blank" href="liveshow.html?roomid=xx">
+                                    <img src="images/liveshow/1.jpg" />
+                                    <i class="room-accountbg"></i>
+                                    <i class="room-account"><em>2</em>人观看</i>
+                                    <i class="room-play"></i>
+                                </a>
+                                <div class="room-info">
+                                    <div class="room-nickname">
+                                        <a href="liveshow.html?roomid=xx"><img src="images/liveshow/2.png"></a>
+                                        <a href="liveshow.html?roomid=xx">主播1号</a>
+                                    </div>
+                                    <div class="room-time">开播&nbsp;24分钟前</div>
+                                </div>
+                            </div>
                         </div>
                         <div class="title">大家都在看</div>
                         <div class="rooms"></div>
                     </div>
                     <div class="rank-panel">
-                        <div class="liveBtn">开始直播</div>
                         <div class="title">排行榜：</div>
                         <div class="rank">
                             <div class="subtitle">TOP3富豪榜</div>

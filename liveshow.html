@@ -1,61 +1,138 @@
 <!DOCTYPE HTML>
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>视频聊天</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <style type="text/css" media="screen"> 
-    </style>
-    <script type="text/javascript" src="js/lib/jquery.min.js"></script>
-    <script type="text/javascript" src="js/lib/swfobject.js"></script>
-    <script type="text/javascript" src="js/lib/strophe.min.js"></script>
-    <script type="text/javascript" src="js/lib/strophe.muc.min.js"></script>
-    <script type="text/javascript" src="js/lib/chat.js"></script>
-    <script type="text/javascript" src="js/apps/liveshow.js"></script>
-</head>
-<body>
-<div class="body">
-    <div id='login'>
-        <form name='cred'>
-            <label for='jid'>JID:</label>
-            <input type='text' id='jid' value="daijj" />
-            <label for='pass'>Password:</label>
-            <input type='password' id='pass' />
-            <input type='button' id='connect' value='登录' />
-            <input type='button' id='connectAnonymous' value='游客' />
-        </form>
-    </div>
-    
-    <div id='message'></div>
-    
-    <div>
-        <form name="msessage">
-            <input type='text' id='to' value="test" />
-            <input type='text' id='msg' value="" />
-            <input type='button' id='send' value='Send' />
-        </form>
-    </div>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>波波秀</title>
+        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" type="text/css" href="css/lib/global.css">
+        <link rel="stylesheet" type="text/css" href="css/lib/common.css">
+        <link rel="stylesheet" type="text/css" href="css/lib/layout.css">
+        <link rel="stylesheet" type="text/css" href="css/apps/liveshow.css">
+        <script type="text/javascript" src="js/lib/jquery.min.js"></script>
+        <script type="text/javascript" src="js/lib/html5.js"></script>
+        <script type="text/javascript" src="js/lib/mustache.js"></script>
+        <script type="text/javascript" src="js/lib/layout.js"></script>
+        <script type="text/javascript" src="js/lib/common.js"></script>
+        <script type="text/javascript" src="js/lib/swfobject.js"></script>
+        <script type="text/javascript" src="js/lib/strophe.min.js"></script>
+        <script type="text/javascript" src="js/lib/strophe.muc.min.js"></script>
+        <script type="text/javascript" src="js/lib/chat.js"></script>
+        <script type="text/javascript" src="js/apps/chatroom.js"></script>
+        <script type="text/javascript" src="js/apps/liveshow.js"></script>
+    </head>
+    <body>
+        <div id="page" data-small='yes'>
+            <div id="content" class="content clearfix">
+                <div class="panel-left">
+                    <div class="ownerinfo clearfix">
+                        <div class="avatar">
+                            <img src="images/liveshow/1.jpg" alt="" width="100" height="100">
+                        </div>
+                        <ul class="txt">
+                            <li class="profile">
+                                <a class="pink_color" href="" target="_blank" title=" 末夏的个人档案"> &nbsp;末夏（12055556058）</a>
+                            </li>
+                            <li class="level_diff_score" id="actorLvBoard2">
+                                <span class="actorlv lv5" title="5星"></span>距 
+                                <span class="actorlv lv6"></span> 还差 <span class="upgrade">24770</span>魔豆
+                            </li>
+                            <li class="live_time">
+                                <span class="time" id="live-show-time">目前没在直播</span>
+                            </li>
+                        </ul>
+                        <div class="btnfollow">
+                            <a id="live-follow" data-followed="false" title="关注后，该主播上线直播时，将给您发送系统提醒">关注</a>
+                        </div>
+                    </div>
+                    <div class="liveshow">
+                        <div id="liveshowflash"></div>
+                    </div>
+                    <div class="gift">
+                        <div id="watchPresentBox" class="present_box fixpng">
+                            <span class="g_name"><a class="giftName fixpng" href="#">礼物宝箱</a></span>
+                            <span class="g_num"><em>数量</em><input type="text" class="input_text "><a class="shape" id="giftShapeBtns" href="#">图形</a></span>
+                            <span class="g_person"><em>给</em><input type="text" class="input_text" readonly=""><a href="#" class="to_select fixpng" id="to_select_gifts"></a></span>
+                            <span class="g_send"><a class="send" href="#">赠送</a></span>
+                            <span class="g_pay"><a onclick="if(_puser.uid) { return true } else {Login.toLogin(); return false}" target="_blank" class="pay" href="/user/payshow.php?i=3"><em>充值</em><i class="fixpng"></i></a></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-right">
+                    <div class="giftmsg">
+                        <ul class="cur_gift" id="live-gift-board">  
+                            <li>
+                                <span>
+                                    <a href="/10000" target="_blank" class="C_link1 pink_color">妖皇(10000)</a> 送给 
+                                    <a href="/12055556058" target="_blank" class="C_link1 pink_color">  末 夏</a> 1个项链
+                                    <a class="sgf s_xianglian"></a>
+                                </span>
+                                <span class="time">20:47:59</span>
+                            </li>
+                            <li>
+                                <span>
+                                    <a href="/10000" target="_blank" class="C_link1 pink_color">妖皇(10000)</a> 送给 
+                                    <a href="/12055556058" target="_blank" class="C_link1 pink_color">  末 夏</a> 1个项链
+                                    <a class="sgf s_xianglian"></a>
+                                </span>
+                                <span class="time">20:47:59</span>
+                            </li>
+                            <li>
+                                <span>
+                                    <a href="/10000" target="_blank" class="C_link1 pink_color">妖皇(10000)</a> 送给 
+                                    <a href="/12055556058" target="_blank" class="C_link1 pink_color">  末 夏</a> 1个项链
+                                    <a class="sgf s_xianglian"></a>
+                                </span>
+                                <span class="time">20:47:59</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="chatroom">
+                        <div class="body">
+                            <div id='login'>
+                                <form name='cred'>
+                                    <label for='jid'>JID:</label>
+                                    <input type='text' id='jid' value="daijj" />
+                                    <label for='pass'>Password:</label>
+                                    <input type='password' id='pass' />
+                                    <input type='button' id='connect' value='登录' />
+                                    <input type='button' id='connectAnonymous' value='游客' />
+                                </form>
+                            </div>
+                            
+                            <div id='message'></div>
+                            
+                            <div>
+                                <form name="msessage">
+                                    <input type='text' id='to' value="test" />
+                                    <input type='text' id='msg' value="" />
+                                    <input type='button' id='send' value='Send' />
+                                </form>
+                            </div>
 
-    
-    <div id="mySetting">
-        <label for="UID">用户ID：<input type="text" id="UID" name="UID" value="user1" /></label>&nbsp;<a href="#" id="btnPublish">开始直播</a>
-    </div>
+                            
+                            <div id="mySetting">
+                                <label for="UID">用户ID：<input type="text" id="UID" name="UID" value="user1" /></label>&nbsp;<a href="#" id="btnPublish">开始直播</a>
+                            </div>
 
-    <div id="myView" class="producer" style="display:none;">
-        <div id="myCamera">
-            <p>
-                To view this page ensure that Adobe Flash Player version 
-                11.0.0 or greater is installed. 
-            </p>
+                            <div id="myView" class="producer" style="display:none;">
+                                <div id="myCamera">
+                                    <p>
+                                        To view this page ensure that Adobe Flash Player version 
+                                        11.0.0 or greater is installed. 
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div id="userList">
+                                <label for="liveUID">用户ID：<input type="text" id="liveUID" name="liveUID" value="user1" /></label>&nbsp;<a href="#" id="btnLive">查看直播</a>
+                            </div>
+
+                            <div id="videoList">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    
-    <div id="userList">
-        <label for="liveUID">用户ID：<input type="text" id="liveUID" name="liveUID" value="user1" /></label>&nbsp;<a href="#" id="btnLive">查看直播</a>
-    </div>
-
-    <div id="videoList">
-    </div>
-</div>
-</body>
+    </body>
 </html>

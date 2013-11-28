@@ -1,7 +1,9 @@
 var app = app || {};
 $(function(){
+	var page = $('#page');
 	var header = '<div id="header" class="header">' +
 				 	'<div class="topNav">' +
+				 		'<div class="logo"><a href="/"><img width="63" height="29" border="0" src="images/logo.png" title="美女视频聊天 – 波波秀" alt="美女视频聊天 – 六间房"></a></div>'+
 					 	'<div class="userPanel">' +
 					 		'<ul><li class="loginBtn"><a>登录</a></li>' +
 	    					'<li class="registerBtn"><a>注册</a></li>' +
@@ -10,7 +12,7 @@ $(function(){
 	    			'</div>' +
 	    			'<div class="headmanup">' +
 		    			'<div class="headmanu">' +
-				            '<div class="logo"><a href="/"><img width="100" height="46" border="0" src="images/logo.png" title="美女视频聊天 – 六间房" alt="美女视频聊天 – 六间房"></a></div>'+
+				            '<div class="logo"><a href="/"><img width="100" height="46" border="0" src="images/logo.png" title="美女视频聊天 – 波波秀" alt="美女视频聊天 – 六间房"></a></div>'+
 			                '<ul class="navMain">' +
 						        '<li class="active"><a href="/">首页</a></li>' +
 						        '<li class="navMain-video"><a href="store.html">商城</a></li>' +
@@ -54,7 +56,7 @@ $(function(){
 				   '</div>';
 	app.initHeader = function(){
 		var hdPanel = $(header);
-		hdPanel.prependTo($('#page'));
+		hdPanel.prependTo(page);
 		hdPanel.on('click','.loginBtn',function(){
 			var dialog = new CommonDialog({
 				width:460,
@@ -94,12 +96,16 @@ $(function(){
 					'Copyright&copy;boboxiu.tv. All Rights Reserved.京ICP备13005687号-3' +
 				 '</div>';
 	app.initFooter = function(){
-		$(footer).appendTo($('#page'));
+		$(footer).appendTo(page);
 	};
-	if($('#page').data('header') != 'no'){
+	if(page.data('header') != 'no'){
 		app.initHeader();
 	}
-	if($('#page').data('footer') != 'no'){
+	if(page.data('footer') != 'no'){
 		app.initFooter();
+	}
+	if(page.data('small') == 'yes'){
+		$('.headmanup',page).hide();
+		$('.topNav .logo',page).show();
 	}
 });

@@ -1,9 +1,40 @@
 .col1{
 	float: left;
-	width: 178px;
+	width: 180px;
 	padding-bottom: 20px;
-	margin-top: 10px;
+	height: 100%;
 }
+.col1 .viewCount {
+	background: #f5f5f5;
+	border-left: 1px solid #e6e6e6;
+	border-right: 1px solid #e6e6e6;
+}
+.col1 .viewCount p {
+	color: #666;
+	padding: 25px 30px 0;
+}
+.col1 .viewCount p.num {
+	padding: 8px 22px 16px 0;
+	text-align: right;
+	color: #999;
+	font-family: Georgia,"Times New Roman";
+}
+.col1 .viewCount em {
+	font-size: 26px;
+	padding-right: 3px;
+	color: #f09;
+}
+.col1 .bgBlock .bgBox {
+	width: 180px;
+	height: 22px;
+	background: #fff url(../../images/index_left.png) no-repeat 0 -438px;
+}
+.col1 .bgBox {
+	display: block;
+	width: 100%;
+	background: #fff;
+}
+
 .banner{
 	border:1px solid #e6e6e6;
 	border-top: 3px solid #f09;
@@ -12,10 +43,10 @@
 	position: relative;
 }
 .banner .item.active{
-	background: #e6e6e6
+	background: #f5f5f5
 }
 .banner .item.active:after {
-    border-left: 7px solid #e6e6e6;
+    border-left: 7px solid #f5f5f5;
     border-top: 7px solid transparent;
     border-bottom: 7px solid transparent;
     content: "";
@@ -50,12 +81,14 @@
 .col2{
 	float: left;
 	width: 820px;
-	margin-top: 10px;
+	background:#f5f5f5; 
 }
 .room-panel{
 	float: left;
-	width: 640px;
+	width: 560px;
+	min-height: 500px;
 	padding-top: 21px;
+	background: #fff;
 }
 .room-panel .title{
 	padding: 0 0 12px;
@@ -64,23 +97,101 @@
 	border-bottom: 1px solid #e6e6e6;
 }
 .rooms{
-	margin: 20px;
+	margin: 20px 0px;
 }
-.rooms .room{
+.room{
 	float: left;
-	width: 140px;
-	padding: 0px 10px 10px 0px;
-
+	width: 156px;
+	padding: 0 5px 18px 20px;
 }
-.rooms .room .room-info{
-	border: 1px solid #000;
+.room .room-logo{
+	position: relative;
+	display: block;
+}
+.room .room-logo img{
+	width: 156px;
+	height: 118px;
+}
+.room .room-logo i{
+	display: block;
+	position: absolute;
+}
+.room .room-logo .room-play{
+	z-index: 1;
+	display: none;
+	width: 156px;
+	height: 118px;
+	top: 0;
+	background: url(http://vr2.6.cn/imges/live2013/mmlist_play_v1.png) no-repeat 0 0;
+	_background: 0;
+}
+.room .room-logo:hover .room-play{
+	display: block;
+}
+.room .room-logo .room-accountbg{
+	z-index: 2;
+	left: 0;
+	top: 92px;
+	width: 156px;
+	height: 26px;
+	background: #000;
+	opacity: .5;
+	filter: alpha(opacity=50);
+}
+.room .room-logo .room-account{
+	z-index: 3;
+	height: 14px;
+	line-height: 14px;
+	color: #fff;
+	top: 95px;
+	right: 10px;
+}
+.room .room-logo .room-account em{
+	font-size: 22px;
+	padding-right: 3px;
+	color: #f09;
+	font-family: Georgia,"Times New Roman"
+}
+.room .room-info{
+	border-left: 1px solid #eaeaea;
+	border-right: 1px solid #eaeaea;
+	border-bottom: 2px solid #eaeaea;
+	padding: 10px 0 10px 8px;
+}
+.room .room-info .room-nickname{
+	height: 24px;
+	line-height: 24px;
+	font-size: 12px;
+	overflow: hidden;
+}
+.room .room-info .room-nickname a{
+	color:#333;
+}
+.room .room-info .room-nickname a:hover{
+	color: #f09;
+	text-decoration: underline;
+}
+.room .room-info .room-nickname a:hover img{
+	padding: 0;
+	border: 1px solid #f09;
+}
+.room .room-info .room-nickname img{
+	float: left;
+	padding: 1px;
+	height: 22px;
+	width: 22px;
+	vertical-align: middle;
+	margin-right: 5px;
+	border-radius: 3px;
+}
+.room .room-info .room-time{
+	color: #808080;
+	padding-top: 4px;
 }
 .rank-panel{
 	float: right;
-	width: 178px;
-	border:1px solid #e6e6e6;
-	border-top: 3px solid #f09;
-	border-radius: 3px 3px 0 0;
+	width: 220px;
+	padding: 20px
 }
 .rank-panel .title{
 	font-size: 20px;
