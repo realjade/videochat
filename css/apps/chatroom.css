@@ -1,0 +1,83 @@
+.chatroom{
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+.ct-left{
+	position: absolute;
+	top:0px;
+	bottom: 0px;
+	left: 0px;
+	right: 186px;
+	background: #fff;
+}
+.ct-right{
+	position: absolute;
+	width: 180px;
+	top: 0px;
+	bottom: 0px;
+	right: 0px;
+	background: #fff;
+}
+.ct-tab{
+	font-size: 14px;
+	border-bottom: 2px solid #ccc;
+	height: 42px;
+	_height: 21px;
+}
+.ct-msg-panel .ct-tab li{
+	width: 70px;
+}
+.ct-member-panel .ct-tab li{
+	width: 90px;
+}
+.ct-tab li{
+	float: left;
+	padding: 12px 0px;
+	_padding-bottom: 0px;
+	height: 18px;
+	_height: 26px;
+	cursor: pointer;
+	text-align: center;
+}
+.ct-tab li.active{
+	border-bottom: 2px solid #f82c65;
+}
+.ct-msg{
+	position: absolute;
+	top:44px;
+	left: 0px;
+	right: 0px;
+	bottom: 50px;
+	background: #fff;
+}
+.ct-msg .ct-msg-groupchat{
+	display: block;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	height: 260px;
+	overflow-x:hidden;
+	overflow-y:auto;
+}
+.ct-msg .ct-msg-privatechat{
+	display: block;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	height: 84px;
+	bottom: 0px;
+	border-top: 1px solid #e4e4e4;
+	background: #fef6f7;
+	overflow-x:hidden;
+	overflow-y:auto;
+}
+.ct-send-panel{
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	height: 30px;
+	padding: 10px;
+}

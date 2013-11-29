@@ -50,7 +50,7 @@
 	text-decoration: none;
 }
 .liveshow{
-	height: 340px;
+	height: 360px;
 	background: #fff;
 	margin-top: 12px;
 	width: 450px;
@@ -60,7 +60,7 @@
 	background: #181818;
 	width: 450px;
 	padding: 15px;
-	height: 40px;
+	height: 20px;
 	filter: alpha(opacity:80);
 	opacity: 0.8;
 }
@@ -85,7 +85,6 @@
 .chatroompanel{
 	width: 510px;
 	height: 439px;
-	background: #fff;
 	margin-top: 12px;
 }
 .actorlv {

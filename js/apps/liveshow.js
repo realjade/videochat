@@ -15,6 +15,7 @@ $(function(){
             "11.1.0", "flash/playerProductInstall.swf", 
             { host: '183.203.16.207', port: 8108, uid: 'user1' }, params, {id:'liveshowflash', name:'Consumer'});
     }
+    $('.chatroompanel').chatroom();
     
     var chat = new Chat({
         onConnected:onConnected,
