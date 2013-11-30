@@ -63,6 +63,10 @@
 	height: 260px;
 	overflow-x:hidden;
 	overflow-y:auto;
+	font-size: 12px;
+	padding-top: 5px;
+	padding-left: 3px;
+	line-height: 24px;
 }
 .ct-msg .ct-msg-privatechat{
 	display: block;
@@ -75,6 +79,16 @@
 	background: #fef6f7;
 	overflow-x:hidden;
 	overflow-y:auto;
+}
+.msg-time {
+	color: #a8a8a8;
+}
+.msg-from{
+	color: #34b4e9;
+	cursor: pointer;
+}
+.msg-from-id{
+	color: #f82c65;
 }
 .ct-send-panel{
 	position: absolute;

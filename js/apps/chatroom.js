@@ -8,7 +8,8 @@ $(function(){
 		$.extend(options,o);
 		var self = this,
 			chat = null,
-			roomId = options.roomId;
+			roomId = options.roomId,
+			roomMembers = [];
 		_init();
 		function _init(){
 			self.options = options;
@@ -61,7 +62,9 @@ $(function(){
 				pass:options.pass,
 		        onConnected:_onConnected,
 		        onMessage:_onMessage,
-		        onRoomMessage:_onRoomMessage
+		        onRoomMessage:_onRoomMessage,
+		        onPresence:_onPresence,
+		        onRoster:_onRoster
 		    });
 		    self.chat = chat;
 		    chat.connect();
@@ -71,6 +74,9 @@ $(function(){
 			self.on('click','.ct-tab-admin',_toggleMemberTab);
 			self.on('click','.sendBtn',_sendMsg);
 			$('.msgInput',self).inputEnter(_sendMsg);
+			$(window).unload(function(){
+		    	chat.leaveRoom(roomId);   
+		    });
 		}
 		function _toggleMemberTab(tab){
 			$('.ct-member-panel .active',self).removeClass('active');
@@ -93,9 +99,8 @@ $(function(){
 				if(_userJid == -1){
 					chat.send(roomId,_msg,'groupchat');
 				}
-			}else{
-				_msgInput.val(_msg);
 			}
+			_msgInput.val('');
 		}
 		function _onConnected(_jid,_sid,_rid){
             self.jid = _jid;
@@ -104,31 +109,59 @@ $(function(){
 	        chat.joinRoom(roomId);
 	    }
 	    var _msgTemplate = {
-    		'normal':'<li>{{0}}</li>'
+    		'normal':'<li><span class="msg-time">{{time}}</span>&nbsp;<span class="msg-from">{{fromNick}}<span class="msg-from-id">({{fromId}})</span></span>说：' +
+    				 '<span class="msg-text">{{msg}}</span></li>'
     	}
+    	var index = 0;
 	    var _privateChat = $('.ct-msg-privatechat',self);
-	    function _onMessage(form,msg,type){
-	        message((from ? from : '[消息]') + ': ' + msg);
+	    function _onMessage(form,msg,stamp,type){
+	    	tools.log('private:' + index++);
+	        try{
+	    		var _msg = JSON.parse(msg);
+	    		_processMsg(_msg,from,stamp,type);
+	    	}catch(e){
+	    		_processMsg(msg,from,stamp,type);
+	    	}
 	    }
 	    
 	    var _groupChat = $('.ct-msg-groupchat',self);
-	    function _onRoomMessage(from,msg,type){
+	    function _onRoomMessage(from,msg,stamp,type){
 	    	try{
 	    		var _msg = JSON.parse(msg);
-	    		_processMsg(_msg,from);
+	    		_processMsg(_msg,from,stamp,type);
 	    	}catch(e){
-	    		_processMsg(msg,from);
+	    		_processMsg(msg,from,stamp,type);
 	    	}
 	        //message((from ? from : '[消息]') + ': ' + msg);
 	    }
-	    function _processMsg(msg,from){
-	    	if(msg){
-	    		var _tml = _msgTemplate['normal'].template('群聊：'+ msg + 'from:' + from);
-	    		tools.log(_msgTemplate);
-	    		$(_tml).appendTo(_groupChat);
+	    function _processMsg(msg,from,stamp,type){
+	    	if(msg && from != self.sid){
+	    		var _tml = _msgTemplate['normal'],
+	    			_now = new Date(),
+	    			_time;
+	    		if((_now.getTime() - stamp.getTime())/1000 < 24*60*60){
+	    			_time = tools.dateformat(stamp,'min');
+	    		}else{
+	    			_time = tools.dateformat(stamp,'medium');
+	    		}
+	    		var _msgobj = {
+	    			time:_time,
+	    			fromNick:'游客',
+	    			fromId:from,
+	    			msg:msg
+	    		}
+	    		$(Mustache.render(_tml,_msgobj)).appendTo(_groupChat);
 	    	}
-	    	tools.log('群聊：'+ msg + 'from:' + from);
 	    }
+	    function _addMsg(msg){
+
+	    }
+	    function _onPresence(stanza,room){
+	    	tools.log('加入房间:'+stanza);
+	    }
+		function _onRoster(roster,room){
+			tools.log('房间成员:'+roster);
+		}
 	    return self;
 	};
 });

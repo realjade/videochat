@@ -10,7 +10,9 @@ function Chat(o) {
         pass:'',
         onConnected:jQuery.noop,
         onMessage:jQuery.noop,
-        onRoomMessage:jQuery.noop
+        onRoomMessage:jQuery.noop,
+        onRoster:jQuery.noop,
+        onPresence:jQuery.noop
     }
     $.extend(options,o);
     this.options = options;
@@ -69,16 +71,20 @@ Chat.prototype = {
         var _msg = $msg({to: to, from: self.connection.jid, type: _t}).c("body").t(message);
         self.connection.send(_msg.tree());
     },
-    onMessage:function(msg) {
+    onMessage:function(msg){
         var self = this,
             to = msg.getAttribute('to'),
             from = msg.getAttribute('from'),
             type = msg.getAttribute('type'),
             elems = msg.getElementsByTagName('body');
-
+        var _delay = msg.getElementsByTagName('delay'),
+            _stamp = new Date();
+        if(_delay && _delay.length){
+            _stamp = new Date(_delay[0].getAttribute('stamp'));
+        }
         if (type == "chat" && elems.length > 0) {
             var body = elems[0];
-            self.options.onMessage.call(self,from,Strophe.getText(body),type);
+            self.options.onMessage.call(self,from,Strophe.getText(body),_stamp,type);
         }
 
         // we must return true to keep the handler alive.
@@ -94,29 +100,39 @@ Chat.prototype = {
             self.connection.jid.split('@')[0], 
             self.onRoomMessage.bind(self),self.onPresence.bind(self), self.onRoster.bind(self));
     },
+    leaveRoom:function(roomId,msg){
+        var self = this;
+        self.connection.muc.leave(roomId, self.connection.jid.split('@')[0], self.onLeaveRomm.bind(self), msg);
+    },
     onRoomMessage:function(stanza, room) {
-        tools.log('群聊消息:'+stanza);
         var self = this,
             from = stanza.getAttribute('from').split('/')[1],
             type = stanza.getAttribute('type'),
             elems = stanza.getElementsByTagName('body');
-        self.options.onRoomMessage.call(self,from,Strophe.getText(elems[0]),type);
+        var _delay = stanza.getElementsByTagName('delay'),
+            _stamp = new Date();
+        if(_delay && _delay.length){
+            _stamp = new Date(_delay[0].getAttribute('stamp'));
+        }
+        self.options.onRoomMessage.call(self,from,Strophe.getText(elems[0]),_stamp,type);
         return true;
     },
     onPresence:function(stanza, room) {
-        tools.log('onPresence stanza: ' + stanza);
-        tools.log('onPresence room  : ' + room);
+        var self = this;
+        self.options.onPresence.call(self,stanza,room);
         return true;
     },
     onRoster:function(roster, room) {
-        tools.log('onPresence roster: ' + roster);
-        tools.log('onPresence room  : ' + room);
-        
+        var self = this;
+        self.options.onRoster.call(self,roster,room);
         return true;
+    },
+    onLeaveRomm:function(){
+        alert('leave');
+        tools.log(arguments);
     },
     setOptions:function(o){
         $.extend(this.options,o);
-        tools.log(this.options);
     }
 
 };
