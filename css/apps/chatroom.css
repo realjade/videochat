@@ -31,6 +31,9 @@
 .ct-member-panel .ct-tab li{
 	width: 90px;
 }
+.ct-member .ct-admin-list{
+	display: none;
+}
 .ct-tab li{
 	float: left;
 	padding: 12px 0px;
@@ -48,7 +51,7 @@
 	top:44px;
 	left: 0px;
 	right: 0px;
-	bottom: 50px;
+	bottom: 70px;
 	background: #fff;
 }
 .ct-msg .ct-msg-groupchat{
@@ -78,6 +81,32 @@
 	bottom: 0px;
 	left: 0px;
 	right: 0px;
-	height: 30px;
-	padding: 10px;
+	height: 70px;
+	padding: 0px 10px;
+}
+.ct-send-panel .send-prop{
+	margin-top: 6px;
+}
+.ct-send-panel .send-msg{
+	margin-top: 6px;
+}
+.ct-send-panel .userSelector{
+	width: 70px;
+	height: 25px;
+	margin-right: 10px;
+}
+.ct-send-panel .msgInput{
+	width: 250px;
+	height: 22px;
+}
+.ct-send-panel .sendBtn{
+	font-size: 12px;
+	float: right;
+	line-height: 28px;
+	height: 28px;
+	width: 40px;
+	text-align: center;
+	background: #f82c65;
+	cursor: pointer;
+	color: #fff;
 }

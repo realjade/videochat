@@ -28,13 +28,13 @@ Chat.prototype = {
         Strophe.log = self.log;
     },
     rawInput:function(data){
-        console.log('Strophe.RECV: ' + data);
+        tools.log('Strophe.RECV: ' + data);
     },
     rawOutput:function(data){
-        console.log('Strophe.SEND: ' + data);
+        tools.log('Strophe.SEND: ' + data);
     },
     log:function(level, msg){
-        //console.log('Strophe.LOG: ' + msg);
+        //tools.log('Strophe.LOG: ' + msg);
     },
     connect:function(){
         var self = this;
@@ -45,20 +45,17 @@ Chat.prototype = {
     onConnect:function(status){
         var self = this;
         if (status == Strophe.Status.CONNECTING){
-            console.log('connecting.');
+            tools.log('connecting.');
         } else if (status == Strophe.Status.CONNFAIL){
-            console.log('failed to connect.');
+            tools.log('failed to connect.');
         } else if (status == Strophe.Status.DISCONNECTING){
-            console.log('disconnecting.');
+            tools.log('disconnecting.');
         } else if (status == Strophe.Status.DISCONNECTED){
-            console.log('disconnected.');
+            tools.log('disconnected.');
             self.connect();
         } else if (status == Strophe.Status.CONNECTED){
-            console.log('connected.');
-            console.log('JID: ' + self.connection.jid);
-            console.log('SID: ' + self.connection.sid);
-            console.log('RID: ' + self.connection.rid);
-            self.options.onConnected.call(self);
+            tools.log('connected.');
+            self.options.onConnected.call(self,self.connection.jid,self.connection.sid,self.connection.rid);
             self.connection.addHandler(self.onMessage, null, 'message', null, null,  null);
             self.connection.send($pres().tree());
         }
@@ -98,6 +95,7 @@ Chat.prototype = {
             self.onRoomMessage.bind(self),self.onPresence.bind(self), self.onRoster.bind(self));
     },
     onRoomMessage:function(stanza, room) {
+        tools.log('群聊消息:'+stanza);
         var self = this,
             from = stanza.getAttribute('from').split('/')[1],
             type = stanza.getAttribute('type'),
@@ -106,19 +104,19 @@ Chat.prototype = {
         return true;
     },
     onPresence:function(stanza, room) {
-        console.log('onPresence stanza: ' + stanza);
-        console.log('onPresence room  : ' + room);
+        tools.log('onPresence stanza: ' + stanza);
+        tools.log('onPresence room  : ' + room);
         return true;
     },
     onRoster:function(roster, room) {
-        console.log('onPresence roster: ' + roster);
-        console.log('onPresence room  : ' + room);
+        tools.log('onPresence roster: ' + roster);
+        tools.log('onPresence room  : ' + room);
         
         return true;
     },
     setOptions:function(o){
         $.extend(this.options,o);
-        console.log(this.options);
+        tools.log(this.options);
     }
 
 };

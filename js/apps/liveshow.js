@@ -15,12 +15,8 @@ $(function(){
             "11.1.0", "flash/playerProductInstall.swf", 
             { host: '183.203.16.207', port: 8108, uid: 'user1' }, params, {id:'liveshowflash', name:'Consumer'});
     }
-    $('.chatroompanel').chatroom();
-    
-    var chat = new Chat({
-        onConnected:onConnected,
-        onMessage:onMessage,
-        onRoomMessage:onRoomMessage
+    var chatroom = $('.chatroompanel').chatroom({
+        roomId:'xx@vv.183.203.16.207'
     });
     $('#connect').click(function(){
         var self = $(this);
@@ -35,18 +31,7 @@ $(function(){
             chat.disconnect();
         }
     });
-    function onConnected(){
-        var connectBtn = $('#connect');
-        connectBtn.val('注销');
-        connectBtn.data('logout',true);
-        chat.joinRoom('xx@vv.183.203.16.207');
-    }
-    function onMessage(form,msg,type){
-        message((from ? from : '[消息]') + ': ' + msg);
-    }
-    function onRoomMessage(from,msg,type){
-        message((from ? from : '[消息]') + ': ' + msg);
-    }
+   
     $('#connectAnonymous').click(function () {
         $('#jid').val('');
         $('#pass').val('');

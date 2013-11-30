@@ -35,6 +35,17 @@ $(function(){
 	        };
 	    };
 	}
+    //为string添加template方法
+    if(!String.prototype.template) {
+        String.prototype.template = function() {
+            var bargs = arguments,
+                _result = this.toString();
+            return _result.replace(/{{(\d)}}/g, function($0,$1){
+                var _i = parseInt($1, 10);
+                return bargs[_i];
+            });
+        };
+    }
 	if(!Date.now){
 	    Date.now = function(){
 	        return new Date().valueOf();
