@@ -117,7 +117,7 @@ $(function(){
 				var _msgobj = {
 	    			time:tools.dateformat(new Date(),'min'),
 	    			fromNick:'我',
-	    			fromId:self.sid,
+	    			fromId:self.username,
 	    			msg:_msg
 	    		}
 	    		_addMsg(_msgobj,_msgTemplate['normal']);
@@ -126,25 +126,29 @@ $(function(){
 		}
 		function _onConnected(_jid,_sid,_rid){
             self.jid = _jid;
+            self.username = self.jid.split('@')[0];
             self.sid = _sid;
             self.rid = _rid;
 	        chat.joinRoom(roomId);
 	    }
+	    function _onReconnected(){
+
+	    }
 	    
 	    var _privateChat = $('.ct-msg-privatechat',self),
 	    	_groupChat = $('.ct-msg-groupchat',self);
-	    function _onMessage(from,msg,stamp,type){
+	    function _onMessage(from,msg,stamp,type,isDelay){
 	    	self.loading.fadeOut();
 	        try{
 	    		var _msg = JSON.parse(msg);
-	    		_processMsg(from,_msg,stamp,type);
+	    		_processMsg(from,_msg,stamp,type,isDelay);
 	    	}catch(e){
-	    		_processMsg(from,msg,stamp,type);
+	    		_processMsg(from,msg,stamp,type,isDelay);
 	    	}
 	    }
 	    
-	    function _processMsg(from,msg,stamp,type){
-	    	if(msg && from != self.sid){
+	    function _processMsg(from,msg,stamp,type,isDelay){
+	    	if(msg && (from != self.username || !isDelay)){
 	    		var _tml = _msgTemplate['normal'],
 	    			_now = new Date(),
 	    			_time;
@@ -169,7 +173,7 @@ $(function(){
 	    	tools.log('加入房间:'+stanza);
 	    }
 		function _onRoster(roster,room){
-			tools.log('房间成员:'+roster);
+			tools.log('在线人员:'+roster);
 			if(!roster) return false;
 			$('.ct-member-list',self).empty();
 			$('.ct-member-account',self).text(0);
@@ -180,13 +184,28 @@ $(function(){
 		}
 		function _addMember(_member){
 			var _memberTmpl = '{{#youke}}<li><span class="youke">游客{{nick}}</span></li>{{/youke}}' +
-							  '{{^youke}}<li class="room-member"><span>{{nick}}</span></li>{{/youke}}';
-			var _data = {
-				youke:{
-					nick:_member.nick
-				}
+							  '{{#user}}<li class="room-member"><span>{{nick}}</span></li>{{/user}}',
+				_data;
+			if(_member.role == 'participant'){
+				_data = {
+					youke:{
+						nick:_member.nick,
+						jid:_member.jid,
+						affiliation:_member.affiliation
+					}
+				};
+				$(Mustache.render(_memberTmpl,_data)).appendTo($('.ct-member-list'),self);
 			}
-			$(Mustache.render(_memberTmpl,_data)).appendTo($('.ct-member-list'),self);
+			if(_member.role == 'moderator'){
+				_data = {
+					user:{
+						nick:_member.nick,
+						jid:_member.jid,
+						affiliation:_member.affiliation
+					}
+				};
+				$(Mustache.render(_memberTmpl,_data)).prependTo($('.ct-member-list'),self);
+			}
 			var _account = parseInt($('.ct-member-account',self).text(),10);
 			$('.ct-member-account',self).text(++_account);
 		}

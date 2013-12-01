@@ -103,7 +103,7 @@ $(function(){
                 error.html('');
                 dialog.close();
                 tools.setStore('visitor',JSON.stringify({username:username,pass:pwd}));
-                loginHeader();
+                window.location.reload();
             }
             element.on('click','.registerBtn',function(){
             	$('.registerBtn',hdPanel).trigger('click');
