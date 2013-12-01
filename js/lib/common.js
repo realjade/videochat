@@ -425,116 +425,116 @@ $(function(){
 	    isMobile:function(mobile){
 	    	return /^\d{11}$/.test(mobile);
 	    },
-        isTelephone:function(telephone){
-            return /^(0[0-9]{2,3}-?)?([2-9][0-9]{6,7})+(-?[0-9]{1,4})?$/.test(telephone);
-        },
-        isMobileOrTelephone:function(contact){
-            return this.isMobile(contact) || this.isTelephone(contact);
-        },
-        isZipcode:function(zipcode){
-            return /^\d{6}$/.test(zipcode);
-        },
-        isDigit:function(digit,len){
-            if(len){
-                return new RegExp('^\d{'+len+'}$','g').test(digit);
-            }else{
-                return /^\d+$/.test(digit);
-            }
-        },
+      isTelephone:function(telephone){
+          return /^(0[0-9]{2,3}-?)?([2-9][0-9]{6,7})+(-?[0-9]{1,4})?$/.test(telephone);
+      },
+      isMobileOrTelephone:function(contact){
+          return this.isMobile(contact) || this.isTelephone(contact);
+      },
+      isZipcode:function(zipcode){
+          return /^\d{6}$/.test(zipcode);
+      },
+      isDigit:function(digit,len){
+          if(len){
+              return new RegExp('^\d{'+len+'}$','g').test(digit);
+          }else{
+              return /^\d+$/.test(digit);
+          }
+      },
 	    uniqueID:function(){
 	    	return Date.now().toString(36);
 	    },
-        setStore:function(key,value){
-            var storage = window.localStorage;
-            if(!storage) return '';
-            storage.setItem(key,value);
+      setStore:function(key,value){
+          var storage = window.localStorage;
+          if(!storage) return '';
+          storage.setItem(key,value);
 
-        },
-        getStore:function(key){
-            var storage = window.localStorage;
-            if(!storage) return '';
-            return storage.getItem(key) || '';
-        },
-        setDomain:function(){
-            try{
-                document.domain = window.location.hostname.split('.').reverse().slice(0,2).reverse().join('.');
-            }catch(e){
-                tools.log(e);
-            }
-        },
-        cancelDomain:function(){
-            try{
-                document.domain = window.location.hostname;
-            }catch(e){
-                tools.log(e);
-            }
-        },
-        formVerify:{
-            error:function(input,message){
-                var tag = input.data('tag') || tools.uniqueID(),
-                    panel = DOMPanel.getPanel();
-                $('.message[data-tag="'+tag+'"]',panel).remove();
-                input.data('tag',tag);
-                var tmpl = $('<span class="message"><i class="aicon-wrong"></i><span class="error">'+message+'</span></span>');
-                var inputitme = input.parents('.input-item'),
-                    offset = inputitme.offset(),
-                    w = inputitme.width(),
-                    h = inputitme.height();
-                tmpl.attr('data-tag',tag).appendTo(panel);
-                tmpl.css({'position':'absolute','left':offset.left+w+15,'top':offset.top+5,'z-index':1});
-                //input.focus();
-                inputitme.addClass('error');
-            },
-            success:function(input,message){
-                var tag = input.data('tag') || tools.uniqueID(),
-                    panel = DOMPanel.getPanel();
-                $('.message[data-tag="'+tag+'"]',panel).remove();
-                input.data('tag',tag);
-                var tmpl = $('<span class="message"><i class="aicon-right"></i></span>');
-                var inputitme = input.parents('.input-item'),
-                    offset = inputitme.offset(),
-                    w = inputitme.width(),
-                    h = inputitme.height();
-                tmpl.attr('data-tag',tag).appendTo(panel);
-                tmpl.css({'position':'absolute','left':offset.left+w+15,'top':offset.top+5,'z-index':1});
-                inputitme.removeClass('error');
-            },
-            clear:function(){
-                $('.message',DOMPanel.getPanel()).remove();
-            }
-        },
-        redirect:function(ele){
-            var timerEle = ele,
-                total = parseInt(timerEle.text(),10),
-                link = timerEle.siblings('a');
-                url = link.attr('href') || visitor.rootPath;
-            link.prop('href',url);
-            var timer = setInterval(function(){
-                total--;
-                if(total <= 0){
-                    window.location.href = url;
-                    return;
-                }
-                timerEle.html(total);
-            },1000);
-        },
-        resize:function(){
-            var container = $('.container'),
-                content = $('> .content',container),
-                nav = $('> .nav',container),
-                ch = content.height(),
-                wh = $(window).height(),
-                hh = $('#hd').height(),
-                fh = $('#page-footer').height();
-            var h = wh - hh - fh -1;
-            if(wh > (ch + hh + fh)){
-                nav.css('min-height',h);
-                content.css('min-height',nav.height());
-            }else{
-                nav.css('min-height',ch);
-            }
-            container.css('min-height',h);
-        }
+      },
+      getStore:function(key){
+          var storage = window.localStorage;
+          if(!storage) return '';
+          return storage.getItem(key) || '';
+      },
+      setDomain:function(){
+          try{
+              document.domain = window.location.hostname.split('.').reverse().slice(0,2).reverse().join('.');
+          }catch(e){
+              tools.log(e);
+          }
+      },
+      cancelDomain:function(){
+          try{
+              document.domain = window.location.hostname;
+          }catch(e){
+              tools.log(e);
+          }
+      },
+      formVerify:{
+          error:function(input,message){
+              var tag = input.data('tag') || tools.uniqueID(),
+                  panel = DOMPanel.getPanel();
+              $('.message[data-tag="'+tag+'"]',panel).remove();
+              input.data('tag',tag);
+              var tmpl = $('<span class="message"><i class="aicon-wrong"></i><span class="error">'+message+'</span></span>');
+              var inputitme = input.parents('.input-item'),
+                  offset = inputitme.offset(),
+                  w = inputitme.width(),
+                  h = inputitme.height();
+              tmpl.attr('data-tag',tag).appendTo(panel);
+              tmpl.css({'position':'absolute','left':offset.left+w+15,'top':offset.top+5,'z-index':1});
+              //input.focus();
+              inputitme.addClass('error');
+          },
+          success:function(input,message){
+              var tag = input.data('tag') || tools.uniqueID(),
+                  panel = DOMPanel.getPanel();
+              $('.message[data-tag="'+tag+'"]',panel).remove();
+              input.data('tag',tag);
+              var tmpl = $('<span class="message"><i class="aicon-right"></i></span>');
+              var inputitme = input.parents('.input-item'),
+                  offset = inputitme.offset(),
+                  w = inputitme.width(),
+                  h = inputitme.height();
+              tmpl.attr('data-tag',tag).appendTo(panel);
+              tmpl.css({'position':'absolute','left':offset.left+w+15,'top':offset.top+5,'z-index':1});
+              inputitme.removeClass('error');
+          },
+          clear:function(){
+              $('.message',DOMPanel.getPanel()).remove();
+          }
+      },
+      redirect:function(ele){
+          var timerEle = ele,
+              total = parseInt(timerEle.text(),10),
+              link = timerEle.siblings('a');
+              url = link.attr('href') || visitor.rootPath;
+          link.prop('href',url);
+          var timer = setInterval(function(){
+              total--;
+              if(total <= 0){
+                  window.location.href = url;
+                  return;
+              }
+              timerEle.html(total);
+          },1000);
+      },
+      resize:function(){
+          var container = $('.container'),
+              content = $('> .content',container),
+              nav = $('> .nav',container),
+              ch = content.height(),
+              wh = $(window).height(),
+              hh = $('#hd').height(),
+              fh = $('#page-footer').height();
+          var h = wh - hh - fh -1;
+          if(wh > (ch + hh + fh)){
+              nav.css('min-height',h);
+              content.css('min-height',nav.height());
+          }else{
+              nav.css('min-height',ch);
+          }
+          container.css('min-height',h);
+      }
 	};
 });
 /** 全局模板 **/
@@ -881,16 +881,16 @@ CommonDialog.prototype={
         this.show();
 	},
 	getElement: function () {
-        var fragment = ['<div class="common-dialog">', '<div class="wrapper">', '<header>', '<h3 class="title">',
+        var fragment = ['<div class="common-dialog">', '<div class="wrapper">', '<div class="dialog-header">', '<h3 class="title">',
         this.options.title, '</h3>',
-        this.options.minify ? '<a class="minify">最小</a>' : '', '<a class="aicon-close close"></a>', '</header>', '<section>',
-        this.options.message, '</section>', '</div>', '</div>'].join('');
+        this.options.minify ? '<a class="minify">最小</a>' : '', '<a class="aicon-close close"></a>', '</div>', '<div class="dialog-content">',
+        this.options.message, '</div>', '</div>', '</div>'].join('');
         var element = jQuery(fragment);
         if(this.options.isAlert){
-        	element.find('.wrapper').append('<footer><button class="input-ok"><span>' + this.options.okText + '</span></button></footer>');
+        	element.find('.wrapper').append('<div class="dialog-footer"><button class="input-ok"><span>' + this.options.okText + '</span></button></div>');
         }
         if(this.options.isConfirm){
-        	element.find('.wrapper').append('<footer><button class="input-ok"><span>' + this.options.okText + '</span></button></footer>');
+        	element.find('.wrapper').append('<div class="dialog-footer"><button class="input-ok"><span>' + this.options.okText + '</span></button></div>');
         	element.find('footer').append('<button class="input-cancel"><span>'+ this.options.cancelText +'</span></button>');
         }	
         // 设置样式
@@ -903,7 +903,7 @@ CommonDialog.prototype={
             });
         }
         if(!this.options.titleShow){
-            element.find('header').hide();
+            element.find('.dialog-header').hide();
         }
         return element;
     },
@@ -922,11 +922,11 @@ CommonDialog.prototype={
         this.options.width = width;
     },
     getHeader: function () {
-        return this.find('.wrapper > header');
+        return this.find('.wrapper > .dialog-header');
     },
     
     getFooter: function () {
-        return this.find('.wrapper > footer');
+        return this.find('.wrapper > .dialog-footer');
     },
 
     show: function () {
@@ -951,24 +951,24 @@ CommonDialog.prototype={
 
     confirm:function(){
         var self = this;
-        self.element.find('footer .input-ok').trigger('click');
+        self.element.find('.dialog-footer .input-ok').trigger('click');
     },
 
     bindEvent: function () {
         var self = this;
-        this.find('header .close').click(function () {
+        this.find('.dialog-header .close').click(function () {
             self.options.closeCallback.call(self);
             self.close();
         });
-        this.find('header .minify').click(function () {
+        this.find('.dialog-header .minify').click(function () {
             self.hide();
         });
-        this.element.find('footer .input-ok').click(function () {
+        this.element.find('.dialog-footer .input-ok').click(function () {
             if (self.options.okCallback.call(self) !== false) {
             	self.close();
             }
         });
-        this.element.find('footer .input-cancel').click(function () {
+        this.element.find('.dialog-footer .input-cancel').click(function () {
             if (self.options.cancelCallback.call(self) !== false) {
             	self.close();
             }

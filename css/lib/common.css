@@ -158,20 +158,21 @@ textarea:-moz-placeholder{
   position:absolute;
   z-index:2000;
   display:none;
-  border-radius: 4px;
+  border-radius: 5px;
   box-shadow: 0 0 8px #666;
 }
 .common-dialog .wrapper {
   background: #fff;
+  border-radius: 5px;
 }
-.common-dialog .wrapper header {
+.common-dialog .wrapper .dialog-header {
   margin: 2px;
   margin-bottom: 0px;
   height:23px;
   padding: 5px 15px;
   background:#39599D;
 }
-.common-dialog .wrapper header .title {
+.common-dialog .wrapper dialog-header .title {
   margin-top:0px;
   font-size:14px;
   max-width:400px;
@@ -186,7 +187,7 @@ textarea:-moz-placeholder{
   color: #fff;
   font-weight: normal;
 }
-.common-dialog .wrapper header .close {
+.common-dialog .wrapper dialog-header .close {
   width:12px;
   height:12px;
   overflow:hidden;
@@ -197,13 +198,14 @@ textarea:-moz-placeholder{
   opacity: 1;
   filter: alpha(opacity=100);
 }
-.common-dialog .wrapper section {
+.common-dialog .wrapper .dialog-content {
   padding:20px;
   word-wrap:break-word;
   background-color:#FFFFFF;
   font-size: 14px;
+  border-radius: 5px;
 }
-.common-dialog .wrapper section .input-item{
+.common-dialog .wrapper .dialog-content .input-item{
     width: 280px;
 }
 .input-ok.disabled,.input-cancel.disabled{

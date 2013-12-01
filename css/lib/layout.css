@@ -23,12 +23,23 @@
 	float: left;
 	display: none;
 }
-.userPanel {
+.userPanel{
 	float: right;
 	display: inline;
 	margin-right: -6px;
 	_height: 29px;
 	_overflow: hidden;
+}
+.userPanel .loginpanel{
+	display: none;
+}
+.userPanel .loginpanel .userinfo img{
+	width: 25px;
+	height: 25px;
+}
+.userPanel .loginpanel .userinfo .username{
+	color: #fff;
+	margin-left: 10px;
 }
 .userPanel li.loginBtn {
 	padding: 0 4px 0 0;
@@ -109,6 +120,76 @@
     padding: 21px 20px;
     border-left: 1px solid rgb(42, 42, 42);
     border-right: 1px solid rgb(42, 42, 42);
+}
+.login .close{
+	width: 18px;
+	height: 18px;
+	z-index: 10;
+	line-height: 100px;
+	overflow: hidden;
+	display: block;
+	cursor: pointer;
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	background: url(../../images/login_ico.png) no-repeat -40px -20px;
+}
+.login .close:hover{
+	background-position: -60px -20px;
+}
+.login .title{
+	font-size: 22px;
+	color:#333;
+	margin-left: 20px;
+}
+.login .title span{
+	font-size: 30px;
+}
+.login .item{
+	margin-top: 20px;
+	margin-left: 20px;
+}
+.login .subtitle{
+	display: inline-block;
+	width: 70px;
+	vertical-align: top;
+	padding-top: 8px;
+	text-align: right;
+}
+.login .input{
+	display: inline-block;
+}
+.login .error{
+	color: #F82C65;
+	margin-left: 90px;
+}
+.login .captchaImg{
+	float: right;
+	width: 70px;
+	height:30px;
+}
+.login #remember{
+	margin-left: 70px;
+}
+.login .registerBtn,.login .loginBtn{
+	margin-right: 40px;
+}
+.login .registerBtn span,.login .loginBtn span{
+	color: #666;
+}
+.login .error{
+	color:red;
+}
+.login .btn{
+	float: left;
+	margin-left: 70px;
+	color: #fff;
+	font-size: 14px;
+	text-decoration: none;
+	background: #f82c65;
+	padding: 10px 32px;
+	display: block;
+	cursor: pointer;
 }
 #content{
 	width: 1000px;

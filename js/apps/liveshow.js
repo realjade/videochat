@@ -15,7 +15,9 @@ $(function(){
             { host: '183.203.16.207', port: 8108, uid: 'user1' }, params, {id:'liveshowflash', name:'Consumer'});
     }
     var chatroom = $('.chatroompanel').chatroom({
-        roomId:'xx@vv.183.203.16.207'
+        roomId:'xx@vv.183.203.16.207',
+        jid:app.visitor&&app.visitor.username,
+        pass:app.visitor&&app.visitor.pass
     });
     $('#connect').click(function(){
         var self = $(this);
