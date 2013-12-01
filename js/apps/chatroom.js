@@ -9,7 +9,11 @@ $(function(){
 		var self = this,
 			chat = null,
 			roomId = options.roomId,
-			roomMembers = [];
+			roomMembers = [],
+			_msgTemplate = {
+	    		'normal':'<li><span class="msg-time">{{time}}</span>&nbsp;<span class="msg-from" data-jid="{{fromId}}">{{fromNick}}<span class="msg-from-id">({{fromId}})</span></span>说：' +
+	    				 '<span class="msg-text">{{msg}}</span></li>'
+	    	};
 		_init();
 		function _init(){
 			self.options = options;
@@ -41,18 +45,19 @@ $(function(){
 									'<div class="ct-member-panel">' +
 										'<div class="ct-tab">' +
 											'<ul>' +
-												'<li class="ct-tab-member active" data-tab="member">成员（<span></span>）</li>' +
-												'<li class="ct-tab-admin" data-tab="admin">管理员（<span></span>）</li>' +
+												'<li class="ct-tab-member active" data-tab="member">成员（<span class="ct-member-account">0</span>）</li>' +
+												'<li class="ct-tab-admin" data-tab="admin">管理员（<span class="ct-admin-account">0</span>）</li>' +
 											'</ul>' +
 										'</div>' +
 										'<div class="ct-member">' +
-											'<ul class="ct-member-list"><li>1</li></ul>' +
-											'<ul class="ct-admin-list"><li>2</li></ul>' +
+											'<ul class="ct-member-list"></ul>' +
+											'<ul class="ct-admin-list"></ul>' +
 										'</div>' +
 									'</div>' +
 								'</div>' +
 							'</div>';
 			$(_template).appendTo(self);
+			_initLoading();
 			_initChat();
 			_bindEvent();
 		}
@@ -62,17 +67,24 @@ $(function(){
 				pass:options.pass,
 		        onConnected:_onConnected,
 		        onMessage:_onMessage,
-		        onRoomMessage:_onRoomMessage,
+		        onRoomMessage:_onMessage,
 		        onPresence:_onPresence,
 		        onRoster:_onRoster
 		    });
 		    self.chat = chat;
 		    chat.connect();
 		}
+		function _initLoading(){
+			var _loading = $('<div class="ct-loading"><img src="images/liveshow/loading.gif"></div>');
+			self.loading = _loading;
+			DOMPanel.append(_loading);
+			new Offset(_loading,{top:290});
+		}
 		function _bindEvent(){
 			self.on('click','.ct-tab-member',_toggleMemberTab);
 			self.on('click','.ct-tab-admin',_toggleMemberTab);
 			self.on('click','.sendBtn',_sendMsg);
+			self.on('click','.room-member',_memberClick);
 			$('.msgInput',self).inputEnter(_sendMsg);
 			$(window).unload(function(){
 		    	chat.leaveRoom(roomId);   
@@ -90,6 +102,9 @@ $(function(){
 			}
 
 		}
+		function _memberClick(){
+			alert('click');
+		}
 		function _sendMsg(){
 			var _msgInput = $('.msgInput',self),
 				_msg = $.trim(_msgInput.val()),
@@ -99,6 +114,13 @@ $(function(){
 				if(_userJid == -1){
 					chat.send(roomId,_msg,'groupchat');
 				}
+				var _msgobj = {
+	    			time:tools.dateformat(new Date(),'min'),
+	    			fromNick:'我',
+	    			fromId:self.sid,
+	    			msg:_msg
+	    		}
+	    		_addMsg(_msgobj,_msgTemplate['normal']);
 			}
 			_msgInput.val('');
 		}
@@ -108,38 +130,25 @@ $(function(){
             self.rid = _rid;
 	        chat.joinRoom(roomId);
 	    }
-	    var _msgTemplate = {
-    		'normal':'<li><span class="msg-time">{{time}}</span>&nbsp;<span class="msg-from">{{fromNick}}<span class="msg-from-id">({{fromId}})</span></span>说：' +
-    				 '<span class="msg-text">{{msg}}</span></li>'
-    	}
-    	var index = 0;
-	    var _privateChat = $('.ct-msg-privatechat',self);
-	    function _onMessage(form,msg,stamp,type){
-	    	tools.log('private:' + index++);
+	    
+	    var _privateChat = $('.ct-msg-privatechat',self),
+	    	_groupChat = $('.ct-msg-groupchat',self);
+	    function _onMessage(from,msg,stamp,type){
+	    	self.loading.fadeOut();
 	        try{
 	    		var _msg = JSON.parse(msg);
-	    		_processMsg(_msg,from,stamp,type);
+	    		_processMsg(from,_msg,stamp,type);
 	    	}catch(e){
-	    		_processMsg(msg,from,stamp,type);
+	    		_processMsg(from,msg,stamp,type);
 	    	}
 	    }
 	    
-	    var _groupChat = $('.ct-msg-groupchat',self);
-	    function _onRoomMessage(from,msg,stamp,type){
-	    	try{
-	    		var _msg = JSON.parse(msg);
-	    		_processMsg(_msg,from,stamp,type);
-	    	}catch(e){
-	    		_processMsg(msg,from,stamp,type);
-	    	}
-	        //message((from ? from : '[消息]') + ': ' + msg);
-	    }
-	    function _processMsg(msg,from,stamp,type){
+	    function _processMsg(from,msg,stamp,type){
 	    	if(msg && from != self.sid){
 	    		var _tml = _msgTemplate['normal'],
 	    			_now = new Date(),
 	    			_time;
-	    		if((_now.getTime() - stamp.getTime())/1000 < 24*60*60){
+	    		if(((_now.getTime() - stamp.getTime())/1000 < 24*60*60)&&_now.getDay() == stamp.getDay()){
 	    			_time = tools.dateformat(stamp,'min');
 	    		}else{
 	    			_time = tools.dateformat(stamp,'medium');
@@ -150,17 +159,36 @@ $(function(){
 	    			fromId:from,
 	    			msg:msg
 	    		}
-	    		$(Mustache.render(_tml,_msgobj)).appendTo(_groupChat);
+	    		_addMsg(_msgobj,_tml);
 	    	}
 	    }
-	    function _addMsg(msg){
-
+	    function _addMsg(_msg,_tml){
+	    	$(Mustache.render(_tml,_msg)).appendTo(_groupChat);
 	    }
 	    function _onPresence(stanza,room){
 	    	tools.log('加入房间:'+stanza);
 	    }
 		function _onRoster(roster,room){
 			tools.log('房间成员:'+roster);
+			if(!roster) return false;
+			$('.ct-member-list',self).empty();
+			$('.ct-member-account',self).text(0);
+			for(var _memberId in roster){
+				var _member = roster[_memberId];
+				_addMember(_member);
+			}
+		}
+		function _addMember(_member){
+			var _memberTmpl = '{{#youke}}<li><span class="youke">游客{{nick}}</span></li>{{/youke}}' +
+							  '{{^youke}}<li class="room-member"><span>{{nick}}</span></li>{{/youke}}';
+			var _data = {
+				youke:{
+					nick:_member.nick
+				}
+			}
+			$(Mustache.render(_memberTmpl,_data)).appendTo($('.ct-member-list'),self);
+			var _account = parseInt($('.ct-member-account',self).text(),10);
+			$('.ct-member-account',self).text(++_account);
 		}
 	    return self;
 	};

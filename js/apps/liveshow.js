@@ -1,5 +1,4 @@
 $(function(){
-    $('.chatroom').chatroom();
     initLiveShow();
     function initLiveShow(){
         var params = {

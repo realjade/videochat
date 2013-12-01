@@ -3,6 +3,17 @@
 	height: 100%;
 	position: relative;
 }
+.ct-loading{
+	position: absolute;
+	width: 170px;
+	height: 90px;
+	background: url('../../images/liveshow/loading_bg.png') no-repeat;
+	z-index: 100;
+}
+.ct-loading img{
+	margin-left: 65px;
+	margin-top: 25px;
+}
 .ct-left{
 	position: absolute;
 	top:0px;
@@ -33,6 +44,13 @@
 }
 .ct-member .ct-admin-list{
 	display: none;
+}
+.ct-member li{
+	padding: 6px 0 6px 6px;
+	border-bottom: 1px solid #d4d4d4;
+}
+.ct-member li .youke{
+	color: #333;
 }
 .ct-tab li{
 	float: left;
