@@ -82,6 +82,7 @@ function Chat(o) {
         _room._message_handlers = {};
         _room._presence_handlers = {};
         _room._roster_handlers = {};
+        self.connection.pause();
         self.connection = null;
         init();
         connect();
@@ -143,5 +144,6 @@ function Chat(o) {
     self.connect = connect;
     self.send = send;
     self.joinRoom = joinRoom;
+    self.leaveRoom = leaveRoom;
     return self;
 }

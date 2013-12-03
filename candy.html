@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Candy - Chats are not dead yet</title>
+	<link rel="shortcut icon" href="../res/img/favicon.png" type="image/gif" />
+	<link rel="stylesheet" type="text/css" href="res/default.css" />
+	
+	<script type="text/javascript" src="js/lib/jquery.min.js"></script>
+	<script type="text/javascript" src="js/lib/libs.bundle.js"></script>
+	<script type="text/javascript" src="js/lib/candy.bundle.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			Candy.init('/http-bind/', {
+				core: { debug: true,autojoin:true},
+				view: { resources: '/v/res/' }
+			});
+			
+			Candy.Core.connect('daijj@183.203.16.207','123456');
+		});
+	</script>
+</head>
+<body>
+	<div id="candy"></div>
+</body>
+</html>

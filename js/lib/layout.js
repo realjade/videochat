@@ -1,4 +1,6 @@
 var app = app || {};
+app.roomUrl = 'vv.183.203.16.207';
+app.xmppUrl = '183.203.16.207';
 $(function(){
 	var page = $('#page');
 	var header = '<div id="header" class="header">' +
@@ -6,11 +8,11 @@ $(function(){
 				 		'<div class="logo"><a href="/"><img width="63" height="29" border="0" src="images/logo.png" title="美女视频聊天 – 波波秀" alt="美女视频聊天 – 六间房"></a></div>'+
 					 	'<div class="userPanel">' +
 					 		'<ul class="logoutpanel"><li class="loginBtn"><a>登录</a></li>' +
-	    					'<li class="registerBtn"><a>注册</a></li>' +
-	    					'<li class="help"><a href="http://v.6.cn/help.php" target="_blank">帮助</a></li></ul>' +
+	    					'<!--li class="registerBtn"><a>注册</a></li>' +
+	    					'<li class="help"><a href="http://v.6.cn/help.php" target="_blank">帮助</a></li--></ul>' +
                             '<ul class="loginpanel">' +
                                 '<li class="userinfo"><img src="images/liveshow/2.png" /><span class="username"></span></li>' +
-                                '<li class="help"><a href="http://v.6.cn/help.php" target="_blank">帮助</a></li>' +
+                                '<!--li class="help"><a href="http://v.6.cn/help.php" target="_blank">帮助</a></li-->' +
                                 '<li class="logout"><a>离开</a></li>' +
                             '</ul>' +
 	    				'</div>' +
@@ -31,11 +33,11 @@ $(function(){
                         '<div class="item error"></div>' +
 				   		'<div class="item">' +
 				   			'<span class="subtitle">用户名：</span>' +
-				   			'<div class="input"><div class="input-item"><input name="username" type="text" placeholder="请输入您的用户名"/></div></div>' +
+				   			'<div class="input"><div class="input-item"><input value="daijj" name="username" type="text" placeholder="请输入您的用户名"/></div></div>' +
 				   		'</div>' +
 				   		'<div class="item">' +
 				   			'<span class="subtitle">密码：</span>' +
-				   			'<div class="input"><div class="input-item"><input name="password" type="password" placeholder="请输入您的密码"/></div></div>' +
+				   			'<div class="input"><div class="input-item"><input value="123456" name="password" type="password" placeholder="请输入您的密码"/></div></div>' +
 				   		'</div>' +
 				   		'<div class="item">' +
 				   			'<label id="remember" class="checkbox"><input class="checkbox" type="checkbox" checked="" value="1">保持我的登录状态</label>' +
@@ -101,8 +103,28 @@ $(function(){
                     return false;
                 }
                 error.html('');
-                dialog.close();
-                tools.setStore('visitor',JSON.stringify({username:username,pass:pwd}));
+                // jQuery.ajax({
+                //     url: "/weipaike/api",
+                //     data:{op:'login',UserAccount:username,Password:pwd,Version:2,AuthType:0},
+                //     type: "post",
+                //     dataType: 'json',
+                //     success: function(resp){
+                //         if(!resp || resp.errno){
+                //             error.html("登录失败，请重新登录");
+                //         }else{
+                //             dialog.close();
+                //             resp.result[0].password = pwd;
+                //             tools.setStore('visitor',JSON.stringify(resp));
+                //             window.location.reload();
+                //         }
+                //     },
+                //     error:function(){
+                //         smallnote("对不起，取消授权失败");
+                //     }
+                // });
+                // dialog.close();
+                // resp.result[0].password = pwd;
+                tools.setStore('visitor',JSON.stringify({user_account:username,password:pwd}));
                 window.location.reload();
             }
             element.on('click','.registerBtn',function(){
@@ -144,7 +166,7 @@ $(function(){
             if(visitor){
                 $('.logoutpanel',hdPanel).hide();
                 var loginpanel = $('.loginpanel',hdPanel);
-                loginpanel.find('.username').text(visitor.username);
+                //loginpanel.find('.username').text(visitor.result[0].nick_name);
                 loginpanel.show();
             }else{
                 $('.logoutpanel',hdPanel).show();
@@ -169,4 +191,9 @@ $(function(){
 		$('.headmanup',page).hide();
 		$('.topNav .logo',page).show();
 	}
+    if(page.data('needlogin') == 'yes' && !app.visitor){
+        var _loginBtn = $('.loginBtn',page);
+        _loginBtn.trigger('click');
+        app.needlogin = true;
+    }
 });

@@ -2,6 +2,7 @@ $(function(){
 	$.fn.chatroom = function(o){
 		var options = {
 			roomId:'',
+			host:'',
 			jid:'',
 			pass:''
 		}
@@ -65,6 +66,7 @@ $(function(){
 			chat = new Chat({
 				jid:options.jid,
 				pass:options.pass,
+				host:options.host,
 		        onConnected:_onConnected,
 		        onMessage:_onMessage,
 		        onRoomMessage:_onMessage,
