@@ -29,7 +29,8 @@ $(function(){
         }
         initLiveShow();
         var chatroom = $('.chatroompanel').chatroom({
-            roomId:'xx' + '@' + app.roomUrl,
+            //roomId:'xx' + '@' + app.roomUrl,
+            roomId:user.user_account + '@' + app.roomUrl,
             host:app.xmppUrl,
             jid:user.user_account,
             pass:user.password

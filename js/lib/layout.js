@@ -1,6 +1,8 @@
 var app = app || {};
-app.roomUrl = 'vv.183.203.16.207';
-app.xmppUrl = '183.203.16.207';
+//app.roomUrl = 'vv.183.203.16.207';
+//app.xmppUrl = '183.203.16.207';
+app.roomUrl = 'conference.test.beyondvido.com';
+app.xmppUrl = 'test.beyondvido.com';
 $(function(){
 	var page = $('#page');
 	var header = '<div id="header" class="header">' +
@@ -33,11 +35,11 @@ $(function(){
                         '<div class="item error"></div>' +
 				   		'<div class="item">' +
 				   			'<span class="subtitle">用户名：</span>' +
-				   			'<div class="input"><div class="input-item"><input value="daijj" name="username" type="text" placeholder="请输入您的用户名"/></div></div>' +
+				   			'<div class="input"><div class="input-item"><input value="879904" name="username" type="text" placeholder="请输入您的用户名"/></div></div>' +
 				   		'</div>' +
 				   		'<div class="item">' +
 				   			'<span class="subtitle">密码：</span>' +
-				   			'<div class="input"><div class="input-item"><input value="123456" name="password" type="password" placeholder="请输入您的密码"/></div></div>' +
+				   			'<div class="input"><div class="input-item"><input value="111111" name="password" type="password" placeholder="请输入您的密码"/></div></div>' +
 				   		'</div>' +
 				   		'<div class="item">' +
 				   			'<label id="remember" class="checkbox"><input class="checkbox" type="checkbox" checked="" value="1">保持我的登录状态</label>' +
