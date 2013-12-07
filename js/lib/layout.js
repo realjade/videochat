@@ -3,6 +3,7 @@ var app = app || {};
 //app.xmppUrl = '183.203.16.207';
 app.roomUrl = 'conference.test.beyondvido.com';
 app.xmppUrl = 'test.beyondvido.com';
+app.giftUrl = 'http://f.ooupai.com/gift/';
 $(function(){
 	var page = $('#page');
 	var header = '<div id="header" class="header">' +
@@ -13,7 +14,7 @@ $(function(){
 	    					'<!--li class="registerBtn"><a>注册</a></li>' +
 	    					'<li class="help"><a href="http://v.6.cn/help.php" target="_blank">帮助</a></li--></ul>' +
                             '<ul class="loginpanel">' +
-                                '<li class="userinfo"><img src="images/liveshow/2.png" /><span class="username"></span></li>' +
+                                '<li class="userinfo"><img class="smallAvatar" src="" /><span class="username"></span></li>' +
                                 '<!--li class="help"><a href="http://v.6.cn/help.php" target="_blank">帮助</a></li-->' +
                                 '<li class="logout"><a>离开</a></li>' +
                             '</ul>' +
@@ -105,29 +106,29 @@ $(function(){
                     return false;
                 }
                 error.html('');
-                // jQuery.ajax({
-                //     url: "/weipaike/api",
-                //     data:{op:'login',UserAccount:username,Password:pwd,Version:2,AuthType:0},
-                //     type: "post",
-                //     dataType: 'json',
-                //     success: function(resp){
-                //         if(!resp || resp.errno){
-                //             error.html("登录失败，请重新登录");
-                //         }else{
-                //             dialog.close();
-                //             resp.result[0].password = pwd;
-                //             tools.setStore('visitor',JSON.stringify(resp));
-                //             window.location.reload();
-                //         }
-                //     },
-                //     error:function(){
-                //         smallnote("对不起，取消授权失败");
-                //     }
-                // });
+                jQuery.ajax({
+                    url: "/weipaike/api",
+                    data:{op:'login',UserAccount:username,Password:pwd,Version:2,AuthType:0},
+                    type: "post",
+                    dataType: 'json',
+                    success: function(resp){
+                        if(!resp || resp.errno){
+                            error.html("登录失败，请重新登录");
+                        }else{
+                            dialog.close();
+                            resp.result[0].password = pwd;
+                            tools.setStore('visitor',JSON.stringify(resp));
+                            window.location.reload();
+                        }
+                    },
+                    error:function(){
+                        smallnote("对不起，取消授权失败");
+                    }
+                });
                 // dialog.close();
                 // resp.result[0].password = pwd;
-                tools.setStore('visitor',JSON.stringify({user_account:username,password:pwd}));
-                window.location.reload();
+                // tools.setStore('visitor',JSON.stringify({user_account:username,password:pwd}));
+                // window.location.reload();
             }
             element.on('click','.registerBtn',function(){
             	$('.registerBtn',hdPanel).trigger('click');
@@ -168,7 +169,8 @@ $(function(){
             if(visitor){
                 $('.logoutpanel',hdPanel).hide();
                 var loginpanel = $('.loginpanel',hdPanel);
-                //loginpanel.find('.username').text(visitor.result[0].nick_name);
+                loginpanel.find('.username').text(visitor.result[0].nick_name);
+                loginpanel.find('.smallAvatar').attr('src',visitor.result[0].portrait_url);
                 loginpanel.show();
             }else{
                 $('.logoutpanel',hdPanel).show();

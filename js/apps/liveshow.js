@@ -1,9 +1,8 @@
 $(function(){
     if(app && app.visitor){
-        //var user = app.visitor.result[0];
         var user = app.visitor;
-        tools.log(user);
-        
+        user.sexShow = user.result[0].sex == -1 ? "保密" : (user.result[0].sex == 0 ? "男" : "女");
+        $('.ownerinfo').user_info(user);
         function initLiveShow(){
             var params = {
                 quality: "high",
@@ -27,13 +26,13 @@ $(function(){
             $('#mySetting').hide();
             $('#myView').show();
         }
-        initLiveShow();
+        //initLiveShow();
         var chatroom = $('.chatroompanel').chatroom({
             //roomId:'xx' + '@' + app.roomUrl,
-            roomId:user.user_account + '@' + app.roomUrl,
+            roomId:user.result[0].user_account + '@' + app.roomUrl,
+            giftUrl:app.giftUrl,
             host:app.xmppUrl,
-            jid:user.user_account,
-            pass:user.password
+            user:user
         });
 
     }

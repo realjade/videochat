@@ -5,6 +5,7 @@ function Chat(o) {
         bosh_service:'/http-bind/',
         jid:'',
         pass:'',
+        nick:'',
         onConnected:jQuery.noop,
         onMessage:jQuery.noop,
         onRoomMessage:jQuery.noop,
@@ -14,6 +15,7 @@ function Chat(o) {
     $.extend(options,o);
     var self = this;
     self.options = options;
+    self.delayTime = null;
     init();
     function init(){
         self.connection = new Strophe.Connection(self.options.bosh_service);
@@ -92,7 +94,19 @@ function Chat(o) {
     }
     function send(to,message,type){
         var _t = type || 'chat';
-        var _msg = $msg({to: to, from: self.connection.jid, type: _t}).c("body").t(message);
+        var _msg = $msg({to: to, from: options.nick, type: _t});
+        _msg.c('body',null,message.body);
+        var _props = _msg.c('properties');
+        for(var i = 0,len = message.properties.length;i<len;i++){
+            var _item = message.properties[i],
+                _prop = _props.c('property');
+            _prop.c('name',null,_item.key);
+            _prop.c('value',{type:_item.type},_item.value);
+            if(!_item.value){
+                _props.up();
+            }
+            _props.up();
+        }
         self.connection.send(_msg.tree());
     }
     function joinRoom(roomId){
@@ -100,25 +114,49 @@ function Chat(o) {
         // connect room
         self.connection.muc.join(
             roomId,
-            self.connection.jid.split('@')[0], 
+            options.nick, 
             onRoomMessage,onPresence,onRoster);
     }
-    function onRoomMessage(stanza, room) {
-        var from = stanza.getAttribute('from'),
-            type = stanza.getAttribute('type'),
-            elems = stanza.getElementsByTagName('body'),
-            _delay = stanza.getElementsByTagName('delay'),
-            _stamp = new Date();
+    function onRoomMessage(msg, room) {
+        var from = msg.getAttribute('from'),
+            type = msg.getAttribute('type'),
+            body = msg.getElementsByTagName('body'),
+            _delay = msg.getElementsByTagName('delay'),
+            _stamp = new Date(),
+            properties = msg.getElementsByTagName('properties'),
+            message = {};
+        if(!body.length || !properties.length) return true;
         if(_delay && _delay.length){
             _stamp = new Date(_delay[0].getAttribute('stamp'));
+            if(self.delayTime && self.delayTime.getTime() >= _stamp.getTime()){
+                return true;
+            }
+            message.isDelay = true;
         }
-        self.options.onRoomMessage.call(self,from,Strophe.getText(elems[0]),_stamp,type);
+        if(!self.delayTime || (self.delayTime.getTime() < _stamp.getTime())){
+            self.delayTime = _stamp;
+        }
+        message.body = body[0].firstChild.wholeText;
+        message.time = _stamp;
+
+        message.from = {
+            full:from,
+            nick:from.split('/').length == 2 ? from.split('/')[1] : ''
+        };
+        properties = properties[0].getElementsByTagName('property');
+        for(var i = 0,len = properties.length;i<len;i++){
+            var property = properties[i],
+                key = property.getElementsByTagName('name')[0].textContent,
+                value = property.getElementsByTagName('value')[0].textContent;
+            message[key] = value;
+        }
+        self.options.onRoomMessage.call(self,message);
         return true;
     }
     function onPresence(stanza, room) {
         var _jid = stanza.getAttribute('from').split('/')[1],
             _type = stanza.getAttribute('type');
-        if(_type == 'unavailable' && _jid == self.options.jid){
+        if(_type == 'unavailable' && _jid == self.options.nick){
             reconnect();
         }
         self.options.onPresence.call(self,stanza,room);

@@ -1,0 +1,180 @@
+.chatroom{
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+.ct-loading{
+	position: absolute;
+	width: 170px;
+	height: 90px;
+	background: url('../../images/liveshow/loading_bg.png') no-repeat;
+	z-index: 100;
+}
+.ct-loading img{
+	margin-left: 65px;
+	margin-top: 25px;
+}
+.ct-left{
+	position: absolute;
+	top:0px;
+	bottom: 0px;
+	left: 0px;
+	right: 186px;
+	background: #fff;
+}
+.ct-right{
+	position: absolute;
+	width: 180px;
+	top: 0px;
+	bottom: 0px;
+	right: 0px;
+	background: #fff;
+}
+.ct-tab{
+	font-size: 14px;
+	border-bottom: 2px solid #ccc;
+	height: 42px;
+	_height: 21px;
+}
+.ct-msg-panel .ct-tab li{
+	width: 70px;
+}
+.ct-member-panel .ct-tab li{
+	width: 90px;
+}
+.ct-member .ct-admin-list{
+	display: none;
+}
+.ct-member li{
+	padding: 6px 0 6px 6px;
+	border-bottom: 1px solid #d4d4d4;
+}
+.ct-member li .youke{
+	color: #333;
+}
+.ct-tab li{
+	float: left;
+	padding: 12px 0px;
+	_padding-bottom: 0px;
+	height: 18px;
+	_height: 26px;
+	cursor: pointer;
+	text-align: center;
+}
+.ct-tab li.active{
+	border-bottom: 2px solid #f82c65;
+}
+.ct-msg{
+	position: absolute;
+	top:44px;
+	left: 0px;
+	right: 0px;
+	bottom: 70px;
+	background: #fff;
+}
+.ct-msg .ct-msg-groupchat{
+	display: block;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	overflow-x:hidden;
+	overflow-y:auto;
+	font-size: 12px;
+	padding-top: 5px;
+	padding-left: 3px;
+	line-height: 24px;
+}
+.ct-msg .ct-msg-groupchat li img.msg-gift-img{
+	width: 80px;
+	height: 80px;
+}
+.ct-msg .ct-msg-privatechat{
+	display: block;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	height: 84px;
+	bottom: 0px;
+	border-top: 1px solid #e4e4e4;
+	background: #fef6f7;
+	overflow-x:hidden;
+	overflow-y:auto;
+}
+.msg-time {
+	color: #a8a8a8;
+}
+.msg-from{
+	color: #ed2d7a;
+	cursor: pointer;
+}
+.msg-from:hover{
+	text-decoration: underline;
+}
+.msg-to{
+	color:#34b4e9;
+}
+.msg-from-id{
+	color: #f82c65;
+}
+.ct-send-panel{
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	height: 70px;
+	padding: 0px 10px;
+	background: #fef6f7;
+}
+.ct-send-panel .send-prop{
+	margin-top: 6px;
+	position: relative;
+}
+.ct-send-panel .send-msg{
+	margin-top: 6px;
+}
+.ct-send-panel .userSelector{
+	width: 100px;
+	height: 25px;
+	margin-right: 10px;
+	vertical-align: top;
+}
+.ct-send-panel .emojiImgBtn{
+	display: inline-block;
+	width: 32px;
+	height: 30px;
+	border: 0;
+	background: url(../../images/liveshow/watch_chat.png) no-repeat;
+	background-position: 0 -28px;
+	vertical-align: top;
+	margin-top: -6px;
+	cursor: pointer;
+}
+.ct-send-panel .emojiImgPanel{
+	position: absolute;
+	top:-128px;
+	border:1px solid #666;
+	background: #fff;
+	display: none;
+}
+.ct-send-panel .emojiImgPanel img{
+	width: 30px;
+	height: 30px;
+	cursor: pointer;
+}
+.ct-send-panel .msgInput{
+	width: 250px;
+	height: 22px;
+}
+.ct-send-panel .sendBtn{
+	font-size: 12px;
+	float: right;
+	line-height: 28px;
+	height: 28px;
+	width: 40px;
+	text-align: center;
+	background: #f82c65;
+	cursor: pointer;
+	color: #fff;
+}

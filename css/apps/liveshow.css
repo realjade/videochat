@@ -2,13 +2,9 @@
 	background: url("../../images/liveshow/bg.jpg") repeat scroll 0 0 transparent;
 	overflow: hidden;
 }
-.panel-left{
-	float: left;
-	width: 480px;
-	margin-top: 12px;
-}
 .ownerinfo{
 	background: #fff;
+	margin-top: 10px;
 }
 .ownerinfo a:hover{
 	text-decoration: underline;
@@ -49,25 +45,20 @@
 	color: #fff;
 	text-decoration: none;
 }
+.panel-left{
+	float: left;
+	width: 480px;
+}
 .liveshow{
-	height: 380px;
+	height: 429px;
 	background: #fff;
 	margin-top: 12px;
 	width: 450px;
 	padding: 15px;
 }
-.gift{
-	background: #181818;
-	width: 450px;
-	padding: 15px;
-	height: 20px;
-	filter: alpha(opacity:80);
-	opacity: 0.8;
-}
 .panel-right{
 	float: right;
 	width: 510px;
-	margin-top: 12px;
 }
 .giftmsg{
 	background: #fff;
