@@ -10,14 +10,19 @@
         <link rel="stylesheet" type="text/css" href="css/models/chatroom.css">
         <link rel="stylesheet" type="text/css" href="css/models/user_info.css">
         <link rel="stylesheet" type="text/css" href="css/apps/liveshow.css">
+        <script type="text/javascript" src="js/lib/underscore.js"></script>
+        <script type="text/javascript" src="js/configure.js"></script>
         <script type="text/javascript" src="js/lib/jquery.min.js"></script>
         <script type="text/javascript" src="js/lib/html5.js"></script>
         <script type="text/javascript" src="js/lib/mustache.js"></script>
         <script type="text/javascript" src="js/lib/common.js"></script>
         <script type="text/javascript" src="js/lib/layout.js"></script>
         <script type="text/javascript" src="js/lib/swfobject.js"></script>
+        <script type="text/javascript" src="js/lib/sax.js"></script>
+        <script type="text/javascript" src="js/lib/xmldoc.js"></script>
         <script type="text/javascript" src="js/lib/strophe.js"></script>
         <script type="text/javascript" src="js/lib/strophe.muc.js"></script>
+        <script type="text/javascript" src="js/lib/strophe.roster.js"></script>
         <script type="text/javascript" src="js/lib/chat.js"></script>
         <script type="text/javascript" src="js/models/chatroom.js"></script>
         <script type="text/javascript" src="js/models/user_info.js"></script>
@@ -32,6 +37,10 @@
                 <div class="panel-left">
                     <div class="liveshow">
                         <div id="liveshowflash"></div>
+                        <div class="ls-opt">
+                            <div id="ls-on" class="left">上麦</div>
+                            <div id="ls-off" class="left">下麦</div>
+                        </div>
                     </div>
                 </div>
                 <div class="panel-right">

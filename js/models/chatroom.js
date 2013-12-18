@@ -11,7 +11,9 @@ $(function(){
 		var self = this,
 			chat = null,
 			roomId = options.roomId,
-			roomMembers = [];
+			roomMembers = {},
+			connectTag = false,
+			reconnectOnce = false;
 		_init();
 		function _init(){
 			self.options = options;
@@ -44,12 +46,10 @@ $(function(){
 										'<div class="ct-tab">' +
 											'<ul>' +
 												'<li class="ct-tab-member active" data-tab="member">成员（<span class="ct-member-account">0</span>）</li>' +
-						
 											'</ul>' +
 										'</div>' +
 										'<div class="ct-member">' +
 											'<ul class="ct-member-list"></ul>' +
-											'<ul class="ct-admin-list"></ul>' +
 										'</div>' +
 									'</div>' +
 								'</div>' +
@@ -66,6 +66,7 @@ $(function(){
 				host:options.host,
 				nick:user.result[0].nick_name,
 		        onConnected:_onConnected,
+		        onReconnected:_onReconnected,
 		        onRoomMessage:_onMessage,
 		        onPresence:_onPresence,
 		        onRoster:_onRoster
@@ -84,11 +85,21 @@ $(function(){
 			self.on('click','.ct-tab-member',_toggleMemberTab);
 			self.on('click','.ct-tab-admin',_toggleMemberTab);
 			self.on('click','.sendBtn',_sendMsg);
-			self.on('click','.room-member',_memberClick);
 			self.on('click','.msg-from',function(){
-				var _nick = $(this).data('nick');
-					_option = $('<option selected="selected" value="' + _nick + '">' + _nick + '</option>');
-				_option.appendTo($('.userSelector',self));
+				var _nick = $(this).data('nick'),
+					_option = $('<option class="addedOption" selected="selected" value="' + _nick + '">' + _nick + '</option>');
+				if(_nick == '我') return;
+				var _tag = false;
+				$('.userSelector .addedOption',self).each(function(){
+					if($(this).val() == _nick){
+						_tag = true;
+						return false;
+					}
+				});
+				//$('.userSelector .addedOption',self).remove();
+				if(!_tag){
+					_option.appendTo($('.userSelector',self));
+				}
 			});
 			self.on('click','.emojiImgBtn',function(event){
 				$('.emojiImgPanel',self).show();
@@ -100,12 +111,15 @@ $(function(){
 
 			self.on('click','.msg-emoji-btn',function(){
 				var _str = $(this).data('emoji');
-				msgInput.val(msgInput.val() + _str);
+				msgInput.val(msgInput.val() + _str).focus();
 			});
 			msgInput.inputEnter(_sendMsg);
-			$(window).unload(function(){
-		    	chat.leaveRoom(roomId);   
-		    });
+			self.on('mouseover','.msg-from',_shwoMemberOpt);
+			$(document).on('click','.member-kick-opt',_kickMember);
+			$(document).on('click','.member-ban-opt',_banMember);
+			// $(window).unload(function(){
+		 //    	chat.leaveRoom(roomId);   
+		 //    });
 		}
 		function _toggleMemberTab(tab){
 			$('.ct-member-panel .active',self).removeClass('active');
@@ -119,22 +133,22 @@ $(function(){
 			}
 
 		}
-		function _memberClick(){
-			alert('click');
-		}
 		function _sendMsg(){
+			if(!connectTag) return false;
 			var _msgInput = $('.msgInput',self),
 				_body = $.trim(_msgInput.val()),
 				_userSelector = $('.userSelector',self),
 				_toNick = _userSelector.val();
 			if(_body){
 				var _msgObj = {
+					nick:user.result[0].nick_name,
 	    			time:tools.dateformat(new Date(),'min'),
 	    			user:{
 		    			fromNick:"我",
 		    			toNick:_toNick
 	    	    	},
 	    			body:_body,
+	    			bodyShow:_body,
 	    			properties:[
 	    				{
 	    					key:'to',
@@ -168,19 +182,22 @@ $(function(){
 	    				}
 	    			]
 	    		}
-	    		_msgObj.body = processEmojiText(_msgObj.body);
+	    		_msgObj.bodyShow = processEmojiText(_msgObj.bodyShow);
 				chat.send(roomId,_msgObj,'groupchat');
 	    		_addMsg(_msgObj);
 			}
-			_msgInput.val('');
+			_msgInput.val('').focus();
 		}
 		function _onConnected(_jid,_sid,_rid){
+			self.loading.fadeOut();
+			connectTag = true;
             self.sid = _sid;
             self.rid = _rid;
 	        chat.joinRoom(roomId);
 	    }
 	    function _onReconnected(){
-
+	    	connectTag = false;
+	    	reconnectOnce = true;
 	    }
 	    
 	    var _privateChat = $('.ct-msg-privatechat',self),
@@ -206,10 +223,23 @@ $(function(){
     		}else{
     			_time = tools.dateformat(msg.time,'medium');
     		}
+    		msg.richIcon = parseInt(msg.richIcon,10);
     		var _msgObj = {
+    			accountId:msg.accountId,
+    			nick:msg.from.nick,
     			time:_time,
-    			body:msg.body
+    			isDelay:msg.isDelay,
+    			body:msg.body,
+    			bodyShow:msg.body,
+    			richIcon:msg.richIcon > 9 ? 10 : (msg.richIcon + 1),
+    			richLevel:msg.richLevel,
+    			vip:(!msg.vip || parseInt(msg.vip,10) == 0) ? false : parseInt(msg.vip,10) - 5
     		}
+    		if(parseInt(msg.richIcon,10) > 1){
+    	   		_msgObj.showRich = true;
+    	   	}else{
+    	   		_msgObj.showRich = false;
+    	   	}
     		if(msg.from.nick == user.result[0].nick_name){
     			msg.from.nickShow = "我";
     		}else{
@@ -217,83 +247,203 @@ $(function(){
     		}
     	    if(msg.type){
     	    	_msgObj.user = false;
-    	    	_msgObj.body = _msgObj.body.replace('&&U&&','<span class="msg-from">' + msg.from.nickShow + '</span>')
+    	    	var _ru = '<span class="msg-from" data-nick="' + msg.from.nickShow + '">' + msg.from.nickShow + '</span>';
+    	    	if(_msgObj.vip != 0){
+    	    		_ru += '<img class="msg-vip" src="images/liveshow/user_vip' + _msgObj.vip + '.png" />';
+    	    	}
+    	    	if(_msgObj.showRich){
+    	    		_ru += '<img class="msg-rich" src="images/rich/' + _msgObj.richIcon + '.png" /><span class="msg-level">' + _msgObj.richLevel + '</span>';
+    	    	}
+    	    	_msgObj.bodyShow = _msgObj.bodyShow.replace('&&U&&',_ru)
     	    					.replace('&&H&&','<span class="msg-to">'+ self.roomHostNick +'</span>');
-    	    	_msgObj.body = _msgObj.body.replace(/<img src=[\' \"](.*)[\' \"]\/>/g,
+    	    	_msgObj.bodyShow = _msgObj.bodyShow.replace(/<img src=\'(.*)\'\/>/g,
     	    										function($0,$1){
-    	    											return '<img class="msg-gift-img" src="' + options.giftUrl+$1+'.png' + '" />';
+    	    											if($1 == '0'){
+    	    												return '<img class="msg-gift-img" src="images/liveshow/x_chat_redpocket.png" />';
+    	    											}
+    	    											return '<img class="msg-gift-img" src="' + options.giftUrl + $1 + '.png" />';
     	    										});
+    	    	// if(msg.type == '101'){
+    	    	// 	msg.nick = msg.from.nick;
+    	    	// 	_addMember(msg,true);
+    	    	// }
     	    }else{
     	    	_msgObj.user = {
 	    			fromNick:msg.from.nickShow,
-	    			toNick:msg.to
+	    			toNick:msg.to == user.result[0].nick_name ? '我' : msg.to
     	    	}
-    	    	_msgObj.body = processEmojiText(_msgObj.body);
+    	    	_msgObj.bodyShow = processEmojiText(_msgObj.bodyShow);
     	    }
-    	   	if(parseInt(msg.richIcon,10) > 1){
-    	   		msg.showRich = true;
-    	   	}else{
-    	   		msg.showRich = false;
-    	   	}
     		_addMsg(_msgObj);
 	    }
 	    function processEmojiText(str){
-	    	return str.replace(/\/.*;/g,function($0){
+	    	if(!str) return '';
+	    	return str.replace(/\/.{1,2};/g,function($0){
     	    						return getemoji($0);
     	    					});
 	    }
 	    function _addMsg(_msgObj){
+	    	if(_msgObj.isDelay && reconnectOnce){
+	    		$('li',_groupChat).first().remove();
+	    	}
+	    	if(_msgObj.nick && _msgObj.nick == app.adminNick) return false;
 	    	var _tmpl = '<li>' +
-	    					'<span class="msg-time">{{time}}</span>&nbsp;' +
+	    					//'<span class="msg-time">{{time}}</span>&nbsp;' +
 	    					'{{#user}}<span class="msg-from" data-nick={{fromNick}}>{{fromNick}}</span>' +
-	    					'{{#showRich}}<img class="msg-rich" src="images/rich/{{richIcon}}.png" />{{richLevel}}{{/showRich}}对' +
+	    					'{{#vip}}<img class="msg-vip" src="images/liveshow/user_vip{{vip}}.png" />{{/vip}}' +
+	    					'{{#showRich}}<img class="msg-rich" src="images/rich/{{richIcon}}.png" /><span class="msg-level">{{richLevel}}</span>{{/showRich}}对' +
 	    					'<span class="msg-to">{{toNick}}</span>' +
 	    					'说：{{/user}}' +
-	    					'<span class="msg-text">{{& body }}</span>' +
+	    					'<span class="msg-text">{{& bodyShow }}</span>' +
 	    				'</li>';
-	    	$(Mustache.render(_tmpl,_msgObj)).appendTo(_groupChat);
-	    	_groupChat.scrollTop(_groupChat[0].scrollHeight || 0);
+	    	$(Mustache.render(_tmpl,_msgObj)).data(_msgObj).appendTo(_groupChat);
+	    	_groupChat[0].scrollTop = _groupChat[0].scrollHeight;
 	    }
 	    
 	    function _onPresence(stanza,room){
-	    	tools.log('加入房间:'+stanza);
+	    	var _nick = stanza.getAttribute('from').split('/')[1],
+	            _type = stanza.getAttribute('type');
+	        if(_type == 'unavailable' && _nick != user.result[0].nick_name){
+	            _removeMember(_nick);
+	            if(_nick.indexOf('游客') == -1){
+	            	_addMsg({
+	            		time:tools.dateformat(new Date(),'min'),
+	            		bodyShow:_nick + '离开了房间'
+	            	});
+	            }
+	        }else{
+	        	_addMember({nick:_nick},false);
+	        }
 	    }
-		function _onRoster(roster,room){ 
+		function _onRoster(roster,room){
 			self.roomHostNick = room.nick == user.result[0].nick_name ? "我" : room.nick;
 			if(!roster) return false;
-			$('.ct-member-list',self).empty();
-			$('.ct-member-account',self).text(0);
+			if(!roster[user.result[0].nick_name]) return;
+			if($('.ct-member-list li',self).length) return;
 			for(var _memberId in roster){
 				var _member = roster[_memberId];
-				_addMember(_member);
+				_addMember(_member,false);
 			}
 		}
-		function _addMember(_member){
-			var _memberTmpl = '{{#youke}}<li><span class="youke">{{nick}}</span></li>{{/youke}}' +
-							  '{{#user}}<li class="room-member"><span>{{nick}}</span></li>{{/user}}',
-				_data;
-			if(_member.role == 'participant'){
-				_data = {
-					youke:{
-						nick:_member.nick,
-						jid:_member.jid,
-						affiliation:_member.affiliation
-					}
-				};
-				$(Mustache.render(_memberTmpl,_data)).appendTo($('.ct-member-list'),self);
+		function _addMember(_member,isMsg){
+			var _memberTmpl =   '<li class="{{classStr}}">' +
+							    	'<span title="{{nick}}">{{nick}}</span>' +
+							    '</li>';
+				_listPanel = $('.ct-member-list',self),
+				_panel = null;
+			if(_member.nick == app.adminNick) return false;
+			if(roomMembers[_member.nick]){
+				if(isMsg){
+					roomMembers[_member.nick].data(_member);
+				}
+				return;
 			}
-			if(_member.role == 'moderator'){
-				_data = {
-					user:{
-						nick:_member.nick,
-						jid:_member.jid,
-						affiliation:_member.affiliation
-					}
-				};
-				$(Mustache.render(_memberTmpl,_data)).prependTo($('.ct-member-list'),self);
+			if(isMsg && _member.isDelay) return;
+			if(_member.nick == user.result[0].nick_name){
+				_member.classStr = 'member_owner';
+				_member.isAdmin = true;
+				_panel = $(Mustache.render(_memberTmpl,_member));
+				_panel.prependTo(_listPanel);
+			}else{
+				_member.classStr = 'member_normal';
+				_panel = $(Mustache.render(_memberTmpl,_member));
+				_panel.appendTo(_listPanel);
 			}
+			roomMembers[_member.nick] = _panel;
+			//roomMembers[_member.nick].data(_member);
 			var _account = parseInt($('.ct-member-account',self).text(),10);
 			$('.ct-member-account',self).text(++_account);
+		}
+		function _removeMember(_nick){
+			if(roomMembers[_nick]){
+				var _account = parseInt($('.ct-member-account',self).text(),10);
+				$('.ct-member-account',self).text(--_account);
+				roomMembers[_nick].remove();
+				delete roomMembers[_nick];
+			}
+		}
+		function _shwoMemberOpt(){
+			var _item = $(this).parents('li'),
+				_data = _item.data();
+			if(_data.nick == user.result[0].nick_name || !roomMembers[_data.nick]) return;
+			$('#ct-opt').remove();
+			var _str =   '<div id="ct-opt">'+
+							'<div class="member-opt"><a class="member-kick-opt">踢人</a>' +
+							    '<a class="member-ban-opt">禁言</a>' +
+							'</div>' +
+						'</div>',
+				_panel = $(_str);
+			_panel.appendTo(DOMPanel.getPanel()).data(_data);
+			var _offset = $(this).offset();
+			_panel.css({left:_offset.left,top:_offset.top + 15});
+			$(document).one('click',function(){
+				$('#ct-opt').remove();
+			});
+		}
+		function _kickMember(){
+			var _item = $('#ct-opt'),
+				_data = _item.data();
+			$('#ct-opt').remove();
+			if(confirm('您确定要踢出'+_data.nick+'吗？')){
+				if(_data){
+					jQuery.ajax({
+	                    url: "/weipaike/api",
+	                    data:{
+	                    	'op':'managerRoomUser',
+	                    	'power_source':'Wapp',
+	                    	'action_id':1,
+	                    	'sponsor_id':user.result[0].account_id,
+	                    	'sponsor_status':0,
+	                    	'executor_id':_data.accountId,
+	                    	'executor_nickname':_data.nick,
+	                    	'room_id':user.result[0].user_account,
+	                    	'Version':2.1
+	                    },
+	                    type: "POST",
+	                    dataType: 'json',
+	                    success: function(resp){
+	                        if(!resp || resp.errno != 0){
+	                            smallnote('踢人失败');
+	                        }else{
+	                            smallnote('踢人成功');
+	                            _removeMember(_data.nick);
+	                        }
+	                    }
+	                });
+				}
+			}
+		}
+		function _banMember(){
+			var _item = $('#ct-opt'),
+				_data = _item.data();
+			$('#ct-opt').remove();
+			if(confirm('您确定要禁止'+_data.nick+'发言吗？')){
+				if(_data){
+					jQuery.ajax({
+	                    url: "/weipaike/api",
+	                    data:{
+	                    	'op':'managerRoomUser',
+	                    	'power_source':'Wapp',
+	                    	'action_id':2,
+	                    	'sponsor_id':user.result[0].account_id,
+	                    	'sponsor_status':0,
+	                    	'executor_id':_data.accountId,
+	                    	'executor_nickname':_data.nick,
+	                    	'room_id':user.result[0].user_account,
+	                    	'Version':2.1
+	                    },
+	                    type: "POST",
+	                    dataType: 'json',
+	                    success: function(resp){
+	                        if(!resp || resp.errno){
+	                            smallnote('禁言失败');
+	                        }else{
+	                            smallnote('禁言成功');
+	                        }
+	                    }
+	                });
+				}
+			}
 		}
 		var mEmojiResId = [];
 		mEmojiResId[0] = 'xiuba_smiley_2';
@@ -371,6 +521,7 @@ $(function(){
 		mEmojiCodeStr[34] = "/熊;";
 		mEmojiCodeStr[35] = "/皇冠;";
 		function getemoji(str){
+			if(!str) return '';
 			for(var i = 0,len = mEmojiCodeStr.length;i < len; i++){
 				if(mEmojiCodeStr[i] == str){
 					return '<img class="msg-emoji" src="images/emoji/' + mEmojiResId[i] + '.png' + '" />';

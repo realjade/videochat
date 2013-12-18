@@ -7,6 +7,7 @@ function Chat(o) {
         pass:'',
         nick:'',
         onConnected:jQuery.noop,
+        onReconnected:jQuery.noop,
         onMessage:jQuery.noop,
         onRoomMessage:jQuery.noop,
         onRoster:jQuery.noop,
@@ -17,6 +18,8 @@ function Chat(o) {
     self.options = options;
     self.delayTime = null;
     init();
+    self.reConnectTime = new Date();
+    self.reConnectCount = 0;
     function init(){
         self.connection = new Strophe.Connection(self.options.bosh_service);
         // Uncomment the following lines to spy on the wire traffic.
@@ -31,7 +34,7 @@ function Chat(o) {
         tools.log('Strophe.RECV: ' + data);
     }
     function rawOutput(data){
-        tools.log('Strophe.SEND: ' + data);
+        //tools.log('Strophe.SEND: ' + data);
     }
     function log(level, msg){
         //tools.log('Strophe.LOG: ' + msg);
@@ -57,6 +60,7 @@ function Chat(o) {
             self.connection.addHandler(onMessage, null, 'message', null, null,  null);
             self.connection.send($pres().tree());
         }
+        return true;
     }
     function onMessage(msg){
         var to = msg.getAttribute('to'),
@@ -66,11 +70,7 @@ function Chat(o) {
             _delay = msg.getElementsByTagName('delay'),
             _stamp = new Date(),
             _isDelay = false;
-        if(_delay && _delay.length){
-            _stamp = new Date(_delay[0].getAttribute('stamp'));
-            _isDelay = true;
-        }
-        if (type == 'chat' && elems.length > 0) {
+        if (type == 'chat' && elems && elems.length > 0) {
             var body = elems[0];
             self.options.onMessage.call(self,from,Strophe.getText(body),_stamp,type,_isDelay);
         }
@@ -84,10 +84,16 @@ function Chat(o) {
         _room._message_handlers = {};
         _room._presence_handlers = {};
         _room._roster_handlers = {};
+        var now = new Date();
+        self.reConnectCount = self.reConnectCount + 1;
+        tools.log('第'+self.reConnectCount+'次断线重连间隔：' + (now.getTime() - self.reConnectTime.getTime())/1000 + 's');
+        self.reConnectTime = now;
         self.connection.pause();
+        //self.connection.reset();
         self.connection = null;
         init();
         connect();
+        self.options.onReconnected.call(self);
     }
     function disconnect(){
         this.connection.disconnect();
@@ -96,7 +102,7 @@ function Chat(o) {
         var _t = type || 'chat';
         var _msg = $msg({to: to, from: options.nick, type: _t});
         _msg.c('body',null,message.body);
-        var _props = _msg.c('properties');
+        var _props = _msg.c('properties',{xmlns:"http://www.jivesoftware.com/xmlns/xmpp/properties"});
         for(var i = 0,len = message.properties.length;i<len;i++){
             var _item = message.properties[i],
                 _prop = _props.c('property');
@@ -107,7 +113,12 @@ function Chat(o) {
             }
             _props.up();
         }
-        self.connection.send(_msg.tree());
+        _msg = _msg.up();
+        self.connection.send(_msg);
+        var _stamp = new Date();
+        if(!self.delayTime || (self.delayTime.getTime() < _stamp.getTime())){
+            self.delayTime = _stamp;
+        }
     }
     function joinRoom(roomId){
         self.roomId = roomId;
@@ -128,9 +139,9 @@ function Chat(o) {
         if(!body.length || !properties.length) return true;
         if(_delay && _delay.length){
             _stamp = new Date(_delay[0].getAttribute('stamp'));
-            if(self.delayTime && self.delayTime.getTime() >= _stamp.getTime()){
-                return true;
-            }
+            // if(self.delayTime && self.delayTime.getTime() >= _stamp.getTime()){
+            //     return true;
+            // }
             message.isDelay = true;
         }
         if(!self.delayTime || (self.delayTime.getTime() < _stamp.getTime())){

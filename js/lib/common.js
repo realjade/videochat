@@ -1,4 +1,57 @@
-window.app = {view:{}};
+var app = app || {};
+app.view = {};
+if(!String.prototype.trim) {
+    String.prototype.trim = function() {
+        return $.trim(this);
+    };
+}
+if(!Array.prototype.reduce) {
+    Array.prototype.reduce = function(iterator, memo, context){
+        var initial = arguments.length > 2,
+            obj = this;
+        if (obj == null) obj = [];
+        _.each(obj, function(value, index, list) {
+          if (!initial) {
+            memo = value;
+            initial = true;
+          } else {
+            memo = iterator.call(context, memo, value, index, list);
+          }
+        });
+        return memo;
+      };
+}
+if(!Array.prototype.filter) {
+    Array.prototype.filter = function(iterator) {
+      var results = [], context = arguments[1], value;
+
+      for (var i = 0, length = this.length >>> 0; i < length; i++) {
+        if (i in this) {
+          value = this[i];
+          if (iterator.call(context, value, i, this)) {
+            results.push(value);
+          }
+        }
+      }
+      return results;
+    }
+}
+if(!Array.prototype.forEach) {
+    Array.prototype.forEach = function(iterator, context) {
+      var obj = this;
+      if (obj == null) return;
+      if (obj.length === +obj.length) {
+        for (var i = 0, length = obj.length; i < length; i++) {
+          iterator.call(context, obj[i], i, obj)
+        }
+      } else {
+        var keys = _.keys(obj);
+        for (var i = 0, length = keys.length; i < length; i++) {
+          iterator.call(context, obj[keys[i]], keys[i], obj)
+        }
+      }
+    };
+}
 $(function(){
 	// 全局AJAX请求失败处理
 	jQuery(document).ajaxError(function (e, xmlhttp, opt) {
@@ -35,6 +88,7 @@ $(function(){
 	        };
 	    };
 	}
+  
     //为string添加template方法
     if(!String.prototype.template) {
         String.prototype.template = function() {

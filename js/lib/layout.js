@@ -1,9 +1,3 @@
-var app = app || {};
-//app.roomUrl = 'vv.183.203.16.207';
-//app.xmppUrl = '183.203.16.207';
-app.roomUrl = 'conference.test.beyondvido.com';
-app.xmppUrl = 'test.beyondvido.com';
-app.giftUrl = 'http://f.ooupai.com/gift/';
 $(function(){
 	var page = $('#page');
 	var header = '<div id="header" class="header">' +
@@ -43,8 +37,8 @@ $(function(){
 				   			'<div class="input"><div class="input-item"><input value="111111" name="password" type="password" placeholder="请输入您的密码"/></div></div>' +
 				   		'</div>' +
 				   		'<div class="item">' +
-				   			'<label id="remember" class="checkbox"><input class="checkbox" type="checkbox" checked="" value="1">保持我的登录状态</label>' +
-                            '<a class="right registerBtn"><span>没有帐号？</span>立即注册</a>'+
+				   			'<label class="checkbox"><input name="remember" type="checkbox" checked="" value="1" />保持我的登录状态</label>' +
+                            '<a class="right registerBtn" style="display:none;"><span>没有帐号？</span>立即注册</a>'+
 				   		'</div>' +
 				   		'<div class="item loginBtn btn">立即登录</div>' +
 				   '</div>';
@@ -89,7 +83,8 @@ $(function(){
             var element = dialog.element,
                 error = $('.error',element),
                 usernameInput = $('input[name="username"]',element),
-                pwdInput = $('input[name="password"]',element);
+                pwdInput = $('input[name="password"]',element),
+                checkboxInput = $('input[name="remember"]',element);
             error.html('');
             usernameInput.inputEnter(loginCommit);
             pwdInput.inputEnter(loginCommit);
@@ -109,7 +104,7 @@ $(function(){
                 jQuery.ajax({
                     url: "/weipaike/api",
                     data:{op:'login',UserAccount:username,Password:pwd,Version:2,AuthType:0},
-                    type: "post",
+                    type: "get",
                     dataType: 'json',
                     success: function(resp){
                         if(!resp || resp.errno){
@@ -118,6 +113,11 @@ $(function(){
                             dialog.close();
                             resp.result[0].password = pwd;
                             tools.setStore('visitor',JSON.stringify(resp));
+                            if(checkboxInput.prop('checked')){
+                                tools.setStore('remember','remember');
+                            }else{
+                                tools.setStore('remember','');
+                            }
                             window.location.reload();
                         }
                     },
@@ -125,10 +125,6 @@ $(function(){
                         smallnote("对不起，取消授权失败");
                     }
                 });
-                // dialog.close();
-                // resp.result[0].password = pwd;
-                // tools.setStore('visitor',JSON.stringify({user_account:username,password:pwd}));
-                // window.location.reload();
             }
             element.on('click','.registerBtn',function(){
             	$('.registerBtn',hdPanel).trigger('click');
@@ -157,7 +153,16 @@ $(function(){
 		});
         hdPanel.on('click','.logout',function(){
             tools.setStore('visitor','');
-            loginHeader();
+            tools.setStore('remember','');
+            window.location.reload();
+        });
+        $(window).unload(function(){
+            if(app.visitor){
+                if(!tools.getStore('remember')){
+                    tools.setStore('visitor','');
+                }
+            }
+            window.location.reload();
         });
         function loginHeader(){
             var visitor = app.visitor = null;

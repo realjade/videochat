@@ -49,8 +49,28 @@
 	padding: 6px 0 6px 6px;
 	border-bottom: 1px solid #d4d4d4;
 }
-.ct-member li .youke{
-	color: #333;
+#ct-opt{
+	position: absolute;
+	z-index: 100;
+	padding: 10px;
+	border:1px solid #d4d4d4;
+	background: #fff;
+}
+#ct-opt .member-opt a{
+	display: block;
+}
+#ct-opt .member-opt a:hover{
+	text-decoration: underline;
+}
+.ct-member-list .member-ban-opt{
+	margin-left: 5px;
+}
+.ct-member-list li span{
+	width:170px;/*对宽度的定义,根据情况修改*/
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	display: inline-block;
 }
 .ct-tab li{
 	float: left;
@@ -108,12 +128,26 @@
 .msg-from{
 	color: #ed2d7a;
 	cursor: pointer;
+	margin-right: 5px;
 }
 .msg-from:hover{
 	text-decoration: underline;
 }
+.msg-level{
+	color: #ed2d7a;
+	margin-left: 3px;
+	margin-right: 5px;
+}
+.msg-vip{
+	margin-right: 5px;
+}
 .msg-to{
 	color:#34b4e9;
+	margin: 0px 5px;
+}
+.msg-emoji{
+	width: 32px;
+	height: 32px;
 }
 .msg-from-id{
 	color: #f82c65;
